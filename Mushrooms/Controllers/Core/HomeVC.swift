@@ -13,19 +13,15 @@ class HomeVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .brown
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if currentUser == nil {
-            let vc = LoginVC()
+            let vc = RegisterVC()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
     }
-    
-
-
 }
 

@@ -19,6 +19,25 @@
 		B5CD10C1257E29EC00E493F6 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10C0257E29EC00E493F6 /* NotificationsVC.swift */; };
 		B5CD10C4257E2A0000E493F6 /* AddMushroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10C3257E2A0000E493F6 /* AddMushroomsVC.swift */; };
 		B5CD10C7257E2A1700E493F6 /* MapsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10C6257E2A1700E493F6 /* MapsVC.swift */; };
+		B5CD10CE257E339300E493F6 /* IconTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10CD257E339300E493F6 /* IconTextButton.swift */; };
+		B5CD10DD257E35E300E493F6 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D1257E35E200E493F6 /* Roboto-Bold.ttf */; };
+		B5CD10DE257E35E300E493F6 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D2257E35E200E493F6 /* Roboto-BlackItalic.ttf */; };
+		B5CD10DF257E35E300E493F6 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D3257E35E200E493F6 /* Roboto-LightItalic.ttf */; };
+		B5CD10E0257E35E300E493F6 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D4257E35E300E493F6 /* Roboto-Medium.ttf */; };
+		B5CD10E1257E35E300E493F6 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D5257E35E300E493F6 /* Roboto-Light.ttf */; };
+		B5CD10E2257E35E300E493F6 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D6257E35E300E493F6 /* Roboto-MediumItalic.ttf */; };
+		B5CD10E3257E35E300E493F6 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D7257E35E300E493F6 /* Roboto-Black.ttf */; };
+		B5CD10E4257E35E300E493F6 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D8257E35E300E493F6 /* Roboto-Thin.ttf */; };
+		B5CD10E5257E35E300E493F6 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10D9257E35E300E493F6 /* Roboto-Regular.ttf */; };
+		B5CD10E6257E35E300E493F6 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10DA257E35E300E493F6 /* Roboto-Italic.ttf */; };
+		B5CD10E7257E35E300E493F6 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10DB257E35E300E493F6 /* Roboto-ThinItalic.ttf */; };
+		B5CD10E8257E35E300E493F6 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD10DC257E35E300E493F6 /* Roboto-BoldItalic.ttf */; };
+		B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10EA257E3DDA00E493F6 /* Extension.swift */; };
+		B5FAC84A257F6C3E00ED025F /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */; };
+		B5FAC852257F724E00ED025F /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC851257F724E00ED025F /* TextButton.swift */; };
+		B5FAC856257F72B600ED025F /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC855257F72B600ED025F /* ButtonModel.swift */; };
+		B5FAC859257F7F9000ED025F /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC858257F7F9000ED025F /* LocationVC.swift */; };
+		B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +55,25 @@
 		B5CD10C0257E29EC00E493F6 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		B5CD10C3257E2A0000E493F6 /* AddMushroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMushroomsVC.swift; sourceTree = "<group>"; };
 		B5CD10C6257E2A1700E493F6 /* MapsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsVC.swift; sourceTree = "<group>"; };
+		B5CD10CD257E339300E493F6 /* IconTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextButton.swift; sourceTree = "<group>"; };
+		B5CD10D1257E35E200E493F6 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		B5CD10D2257E35E200E493F6 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		B5CD10D3257E35E200E493F6 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
+		B5CD10D4257E35E300E493F6 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		B5CD10D5257E35E300E493F6 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		B5CD10D6257E35E300E493F6 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
+		B5CD10D7257E35E300E493F6 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
+		B5CD10D8257E35E300E493F6 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		B5CD10D9257E35E300E493F6 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		B5CD10DA257E35E300E493F6 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		B5CD10DB257E35E300E493F6 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		B5CD10DC257E35E300E493F6 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
+		B5CD10EA257E3DDA00E493F6 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
+		B5FAC851257F724E00ED025F /* TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
+		B5FAC855257F72B600ED025F /* ButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; };
+		B5FAC858257F7F9000ED025F /* LocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
+		B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +90,7 @@
 		B55256AA257E1D2F000D24DA = {
 			isa = PBXGroup;
 			children = (
+				B5CD10D0257E35CC00E493F6 /* Fonts */,
 				B55256B5257E1D2F000D24DA /* Mushrooms */,
 				B55256B4257E1D2F000D24DA /* Products */,
 			);
@@ -68,6 +107,9 @@
 		B55256B5257E1D2F000D24DA /* Mushrooms */ = {
 			isa = PBXGroup;
 			children = (
+				B5FAC854257F729800ED025F /* Model */,
+				B5CD10CC257E337800E493F6 /* Helpers */,
+				B5CD10CB257E335300E493F6 /* Sources */,
 				B55256D1257E227A000D24DA /* Controllers */,
 				B55256B6257E1D2F000D24DA /* AppDelegate.swift */,
 				B55256B8257E1D2F000D24DA /* SceneDelegate.swift */,
@@ -103,7 +145,9 @@
 		B55256D3257E228E000D24DA /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				B5FAC85B257F9EF300ED025F /* Settings */,
 				B55256D4257E22A2000D24DA /* Onboarding */,
+				B5FAC858257F7F9000ED025F /* LocationVC.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -111,10 +155,71 @@
 		B55256D4257E22A2000D24DA /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				B55256CB257E223E000D24DA /* LoginVC.swift */,
-				B55256CE257E224C000D24DA /* RegisterVC.swift */,
+				B5FAC848257F6BBC00ED025F /* Login&Register */,
+				B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		B5CD10CB257E335300E493F6 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		B5CD10CC257E337800E493F6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD10CD257E339300E493F6 /* IconTextButton.swift */,
+				B5CD10EA257E3DDA00E493F6 /* Extension.swift */,
+				B5FAC851257F724E00ED025F /* TextButton.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B5CD10D0257E35CC00E493F6 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD10D7257E35E300E493F6 /* Roboto-Black.ttf */,
+				B5CD10D2257E35E200E493F6 /* Roboto-BlackItalic.ttf */,
+				B5CD10D1257E35E200E493F6 /* Roboto-Bold.ttf */,
+				B5CD10DC257E35E300E493F6 /* Roboto-BoldItalic.ttf */,
+				B5CD10DA257E35E300E493F6 /* Roboto-Italic.ttf */,
+				B5CD10D5257E35E300E493F6 /* Roboto-Light.ttf */,
+				B5CD10D3257E35E200E493F6 /* Roboto-LightItalic.ttf */,
+				B5CD10D4257E35E300E493F6 /* Roboto-Medium.ttf */,
+				B5CD10D6257E35E300E493F6 /* Roboto-MediumItalic.ttf */,
+				B5CD10D9257E35E300E493F6 /* Roboto-Regular.ttf */,
+				B5CD10D8257E35E300E493F6 /* Roboto-Thin.ttf */,
+				B5CD10DB257E35E300E493F6 /* Roboto-ThinItalic.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B5FAC848257F6BBC00ED025F /* Login&Register */ = {
+			isa = PBXGroup;
+			children = (
+				B55256CE257E224C000D24DA /* RegisterVC.swift */,
+				B55256CB257E223E000D24DA /* LoginVC.swift */,
+			);
+			path = "Login&Register";
+			sourceTree = "<group>";
+		};
+		B5FAC854257F729800ED025F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B5FAC855257F72B600ED025F /* ButtonModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B5FAC85B257F9EF300ED025F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +281,18 @@
 			files = (
 				B55256C3257E1D30000D24DA /* LaunchScreen.storyboard in Resources */,
 				B55256C0257E1D30000D24DA /* Assets.xcassets in Resources */,
+				B5CD10DF257E35E300E493F6 /* Roboto-LightItalic.ttf in Resources */,
+				B5CD10E8257E35E300E493F6 /* Roboto-BoldItalic.ttf in Resources */,
+				B5CD10E0257E35E300E493F6 /* Roboto-Medium.ttf in Resources */,
+				B5CD10E4257E35E300E493F6 /* Roboto-Thin.ttf in Resources */,
+				B5CD10E6257E35E300E493F6 /* Roboto-Italic.ttf in Resources */,
+				B5CD10DE257E35E300E493F6 /* Roboto-BlackItalic.ttf in Resources */,
+				B5CD10E5257E35E300E493F6 /* Roboto-Regular.ttf in Resources */,
+				B5CD10DD257E35E300E493F6 /* Roboto-Bold.ttf in Resources */,
+				B5CD10E1257E35E300E493F6 /* Roboto-Light.ttf in Resources */,
+				B5CD10E7257E35E300E493F6 /* Roboto-ThinItalic.ttf in Resources */,
+				B5CD10E3257E35E300E493F6 /* Roboto-Black.ttf in Resources */,
+				B5CD10E2257E35E300E493F6 /* Roboto-MediumItalic.ttf in Resources */,
 				B55256BE257E1D2F000D24DA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,12 +306,19 @@
 			files = (
 				B55256BB257E1D2F000D24DA /* HomeVC.swift in Sources */,
 				B55256B7257E1D2F000D24DA /* AppDelegate.swift in Sources */,
+				B5FAC84A257F6C3E00ED025F /* ForgotPasswordVC.swift in Sources */,
+				B5FAC852257F724E00ED025F /* TextButton.swift in Sources */,
 				B5CD10C7257E2A1700E493F6 /* MapsVC.swift in Sources */,
+				B5FAC859257F7F9000ED025F /* LocationVC.swift in Sources */,
 				B55256CC257E223E000D24DA /* LoginVC.swift in Sources */,
+				B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */,
+				B5FAC856257F72B600ED025F /* ButtonModel.swift in Sources */,
+				B5CD10CE257E339300E493F6 /* IconTextButton.swift in Sources */,
 				B55256B9257E1D2F000D24DA /* SceneDelegate.swift in Sources */,
 				B55256CF257E224C000D24DA /* RegisterVC.swift in Sources */,
 				B5CD10C1257E29EC00E493F6 /* NotificationsVC.swift in Sources */,
 				B5CD10C4257E2A0000E493F6 /* AddMushroomsVC.swift in Sources */,
+				B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */,
 				B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
