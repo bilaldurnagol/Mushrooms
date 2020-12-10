@@ -172,7 +172,7 @@ class EditProfileVC: UIViewController {
                                       height: 50)
         phoneTextfield.addBottomBorder()
         updateButton.frame = CGRect(x: 30,
-                                    y: view.bottom - 80,
+                                    y: view.bottom - 100,
                                     width: view.width - 60,
                                     height: 70)
         
@@ -192,7 +192,7 @@ class EditProfileVC: UIViewController {
       
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 24)!],
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 20)!],
                                                                   for: UIControl.State.normal)
         navigationItem.rightBarButtonItem?.isEnabled = false
     }

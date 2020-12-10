@@ -8,17 +8,18 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home-->
+        <!--HomeVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeVC" customModule="Mushrooms" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="jog-6n-BKP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="hne-JO-1SM"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <navigationItem key="navigationItem" id="hne-JO-1SM"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -29,28 +30,30 @@
             <objects>
                 <viewController id="ce6-6u-ora" customClass="MapsVC" customModule="Mushrooms" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Jf-ST-NHx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="48H-rJ-qeM"/>
+                        <viewLayoutGuide key="safeArea" id="SQY-9K-jRj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="Maps" id="Phz-ZB-faN"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CA8-5m-qVj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1699" y="415"/>
         </scene>
-        <!--Add Mushroom-->
+        <!--New Mushroom-->
         <scene sceneID="yqF-4Z-Zh6">
             <objects>
                 <viewController id="8VT-H2-x8F" customClass="AddMushroomsVC" customModule="Mushrooms" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zHz-Ex-MdO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="y96-U5-8wc"/>
+                        <viewLayoutGuide key="safeArea" id="Zlp-gJ-hR1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Mushroom" id="R40-Pa-hnc"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <navigationItem key="navigationItem" title="New Mushroom" id="R40-Pa-hnc"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D92-Gx-t38" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,11 +64,12 @@
             <objects>
                 <viewController id="4Rb-3k-nEG" customClass="NotificationsVC" customModule="Mushrooms" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HQa-wb-biI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="cR6-T8-eXt"/>
+                        <viewLayoutGuide key="safeArea" id="sOE-fE-eSb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="Notifications" id="JyS-Qw-24p"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xxj-np-hfL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -77,22 +81,23 @@
             <objects>
                 <viewController id="c0o-zc-lJH" customClass="SettingsVC" customModule="Mushrooms" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oh7-TT-Pg5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="NLm-4T-Whd"/>
+                        <viewLayoutGuide key="safeArea" id="5RM-ym-exm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="Settings" id="JEB-7P-mo9"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Leb-Va-r3A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4577" y="415"/>
         </scene>
-        <!--Home-->
+        <!--Navigation Controller-->
         <scene sceneID="sD7-gU-NnH">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fxF-nZ-qIS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="fez-0L-0xX"/>
+                    <tabBarItem key="tabBarItem" title="" image="house.fill" catalog="system" id="fez-0L-0xX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EQx-VC-e5U">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -107,11 +112,11 @@
             </objects>
             <point key="canvasLocation" x="691" y="-324"/>
         </scene>
-        <!--Map-->
+        <!--Navigation Controller-->
         <scene sceneID="ROX-L4-BHf">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pxd-Kx-ijW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="6Wp-Is-xcg"/>
+                    <tabBarItem key="tabBarItem" title="" image="map.fill" catalog="system" id="6Wp-Is-xcg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zxw-3q-eVh">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -130,10 +135,13 @@
         <scene sceneID="PcF-7c-NjF">
             <objects>
                 <tabBarController id="gAE-Sm-sHr" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6lI-Sz-mAU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemPinkColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="fxF-nZ-qIS" kind="relationship" relationship="viewControllers" id="OkC-we-r3B"/>
@@ -147,11 +155,13 @@
             </objects>
             <point key="canvasLocation" x="2696" y="-1209"/>
         </scene>
-        <!--New Mushroom-->
+        <!--Navigation Controller-->
         <scene sceneID="aSj-Wr-hJm">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rj5-dy-by6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="New Mushroom" id="EMq-X0-OgK"/>
+                    <tabBarItem key="tabBarItem" title="" image="plus.rectangle.fill" catalog="system" id="EMq-X0-OgK">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2RD-fs-Pq8">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -166,11 +176,11 @@
             </objects>
             <point key="canvasLocation" x="2697" y="-324"/>
         </scene>
-        <!--Notifications-->
+        <!--Navigation Controller-->
         <scene sceneID="FX6-kx-N5I">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zs8-aW-CTq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notifications" id="fNK-nc-H1U"/>
+                    <tabBarItem key="tabBarItem" title="" image="bell.fill" catalog="system" id="fNK-nc-H1U"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5RU-19-f7o">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -185,11 +195,11 @@
             </objects>
             <point key="canvasLocation" x="3670" y="-324"/>
         </scene>
-        <!--Settings-->
+        <!--Navigation Controller-->
         <scene sceneID="aF4-jD-hgW">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xCS-Bw-Z9c" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" id="Mwe-mh-8qE"/>
+                    <tabBarItem key="tabBarItem" title="" image="gearshape.fill" catalog="system" id="Mwe-mh-8qE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rq4-6w-ol7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -206,8 +216,16 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bell.fill" catalog="system" width="128" height="124"/>
+        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="map.fill" catalog="system" width="128" height="110"/>
+        <image name="plus.rectangle.fill" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

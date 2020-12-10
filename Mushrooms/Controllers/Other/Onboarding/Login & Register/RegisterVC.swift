@@ -9,6 +9,11 @@ import UIKit
 
 class RegisterVC: UIViewController {
     
+    private let scrollView: UIScrollView = {
+       let scrollView = UIScrollView()
+        return scrollView
+    }()
+    
     private let outerView: UIView = {
         let view = UIView()
         return view
@@ -134,25 +139,28 @@ class RegisterVC: UIViewController {
         return label
     }()
     
+    private var keyboardHeight = CGFloat()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(outerView)
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(outerView)
         outerView.addSubview(profileImageView)
         profileImageView.addSubview(logoImageView)
         outerView.addSubview(addButton)
-        view.addSubview(nameLabel)
-        view.addSubview(nameTextfield)
-        view.addSubview(emailLabel)
-        view.addSubview(emailTextfield)
-        view.addSubview(passwordLabel)
-        view.addSubview(passwordTextfield)
-        view.addSubview(confirmLabel)
-        view.addSubview(confirmTextfield)
-        view.addSubview(registerButton)
-        view.addSubview(registerLabel)
-        
+        scrollView.addSubview(nameLabel)
+        scrollView.addSubview(nameTextfield)
+        scrollView.addSubview(emailLabel)
+        scrollView.addSubview(emailTextfield)
+        scrollView.addSubview(passwordLabel)
+        scrollView.addSubview(passwordTextfield)
+        scrollView.addSubview(confirmLabel)
+        scrollView.addSubview(confirmTextfield)
+        scrollView.addSubview(registerButton)
+        scrollView.addSubview(registerLabel)
+  
         registerButton.configure(with: InfoIconTextButton(text: "Register",
                                                           icon: UIImage(named: "MushroomSmall"),
                                                           backgroundColor: [UIColor(red: 245/255, green: 133/255, blue: 36/255, alpha: 1.0).cgColor,
@@ -168,16 +176,21 @@ class RegisterVC: UIViewController {
         let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureHideKeyboard)
         
-        
-        
-
-        
+        //Keyboard height
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification , object: nil)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        outerView.frame = CGRect(x: (view.width - 150)/2,
+        scrollView.frame = view.bounds
+        
+        let newWidth: CGFloat = scrollView.width - 60
+        let textfieldHeight: CGFloat = 50.0
+        let labelHeight: CGFloat = 17.0
+    
+        
+        outerView.frame = CGRect(x: (scrollView.width - 150)/2,
                                  y: 20,
                                  width: 150,
                                  height: 150)
@@ -197,53 +210,51 @@ class RegisterVC: UIViewController {
         
         nameLabel.frame = CGRect(x: 30,
                                  y: outerView.bottom + 10,
-                                 width: view.width - 60,
-                                 height: 17)
+                                 width: newWidth,
+                                 height: labelHeight)
         nameTextfield.frame = CGRect(x: 30,
                                      y: nameLabel.bottom,
-                                     width: view.width - 60,
-                                     height: 50)
+                                     width: newWidth,
+                                     height: textfieldHeight)
         nameTextfield.addBottomBorder()
         emailLabel.frame = CGRect(x: 30,
                                   y: nameTextfield.bottom + 20,
-                                  width: view.width - 60,
-                                  height: 17)
+                                  width: newWidth,
+                                  height: labelHeight)
         emailTextfield.frame = CGRect(x: 30,
                                       y: emailLabel.bottom,
-                                      width: view.width - 60,
-                                      height: 50)
+                                      width: newWidth,
+                                      height: textfieldHeight)
         emailTextfield.addBottomBorder()
         passwordLabel.frame = CGRect(x: 30,
                                      y: emailTextfield.bottom + 20,
-                                     width: view.width - 60,
-                                     height: 17)
+                                     width: newWidth,
+                                     height: labelHeight)
         passwordTextfield.frame = CGRect(x: 30,
                                          y: passwordLabel.bottom,
-                                         width: view.width - 60,
-                                         height: 50)
+                                         width: newWidth,
+                                         height: textfieldHeight)
         passwordTextfield.addBottomBorder()
         confirmLabel.frame = CGRect(x: 30,
                                     y: passwordTextfield.bottom + 20,
-                                    width: view.width - 60,
-                                    height: 17)
+                                    width: newWidth,
+                                    height: labelHeight)
         confirmTextfield.frame = CGRect(x: 30,
                                         y: confirmLabel.bottom,
-                                        width: view.width - 60,
-                                        height: 50)
+                                        width: newWidth,
+                                        height: textfieldHeight)
         confirmTextfield.addBottomBorder()
-       
+        
         registerLabel.frame = CGRect(x: 0,
-                                     y: view.bottom - 30,
-                                     width: view.width,
+                                     y: scrollView.bottom - 30,
+                                     width: scrollView.width,
                                      height: 20)
         
         registerButton.frame = CGRect(x: 30,
                                       y: registerLabel.top - 80,
-                                      width: view.width - 60,
+                                      width: newWidth,
                                       height: 70)
-        
     }
-    
     
     //MARK: - objc funcs
     @objc private func didTapRegister() {
@@ -252,6 +263,14 @@ class RegisterVC: UIViewController {
     
     @objc private func hideKeyboard() {
         view.endEditing(true)
+    }
+    
+    ///Keyboard height
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey ] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            self.keyboardHeight = keyboardRectangle.height
+        }
     }
 }
 
@@ -269,27 +288,16 @@ extension RegisterVC: UITextFieldDelegate {
         return true
     }
     
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField != nameTextfield {
+            self.view.frame.origin.y -= keyboardHeight
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view.frame.origin.y = 0
+        
+    }
+    
 }
-
-
-
-/*
- 
- 
- @objc func keyboardWillShow(notification: NSNotification) {
-     
-     if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-         if self.view.frame.origin.y == 0 {
-             self.view.frame.origin.y -= keyboardSize.height
-         }
-     }
- }
-
- @objc func keyboardWillHide(notification: NSNotification) {
-     if self.view.frame.origin.y != 0 {
-         self.view.frame.origin.y = 0
-     }
- }et
- 
- 
- */

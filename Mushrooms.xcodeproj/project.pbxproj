@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B500C2B52580AF6800D00AFB /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500C2B42580AF6700D00AFB /* ChangePasswordVC.swift */; };
+		B500C2BB2580DA5E00D00AFB /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500C2BA2580DA5E00D00AFB /* NotificationTableViewCell.swift */; };
 		B55256B7257E1D2F000D24DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256B6257E1D2F000D24DA /* AppDelegate.swift */; };
 		B55256B9257E1D2F000D24DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256B8257E1D2F000D24DA /* SceneDelegate.swift */; };
 		B55256BB257E1D2F000D24DA /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256BA257E1D2F000D24DA /* HomeVC.swift */; };
@@ -15,6 +17,10 @@
 		B55256C3257E1D30000D24DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B55256C1257E1D30000D24DA /* LaunchScreen.storyboard */; };
 		B55256CC257E223E000D24DA /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256CB257E223E000D24DA /* LoginVC.swift */; };
 		B55256CF257E224C000D24DA /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256CE257E224C000D24DA /* RegisterVC.swift */; };
+		B59931D125821BFC00D9D857 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D025821BFC00D9D857 /* HomeTableViewCell.swift */; };
+		B59931D62582258D00D9D857 /* PostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */; };
+		B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D8258225AC00D9D857 /* PostTableViewCell.swift */; };
+		B59931DC258225CB00D9D857 /* ActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931DB258225CB00D9D857 /* ActionsTableViewCell.swift */; };
 		B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10BC257E29DC00E493F6 /* SettingsVC.swift */; };
 		B5CD10C1257E29EC00E493F6 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10C0257E29EC00E493F6 /* NotificationsVC.swift */; };
 		B5CD10C4257E2A0000E493F6 /* AddMushroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10C3257E2A0000E493F6 /* AddMushroomsVC.swift */; };
@@ -41,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B500C2B42580AF6700D00AFB /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		B500C2BA2580DA5E00D00AFB /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		B55256B3257E1D2F000D24DA /* Mushrooms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mushrooms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B55256B6257E1D2F000D24DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B55256B8257E1D2F000D24DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +59,10 @@
 		B55256C4257E1D30000D24DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B55256CB257E223E000D24DA /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		B55256CE257E224C000D24DA /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		B59931D025821BFC00D9D857 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		B59931D8258225AC00D9D857 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		B59931DB258225CB00D9D857 /* ActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsTableViewCell.swift; sourceTree = "<group>"; };
 		B5CD10BC257E29DC00E493F6 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		B5CD10C0257E29EC00E493F6 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		B5CD10C3257E2A0000E493F6 /* AddMushroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMushroomsVC.swift; sourceTree = "<group>"; };
@@ -87,6 +99,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B500C2B72580DA2D00D00AFB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B500C2B92580DA4400D00AFB /* Cells */,
+				B55256BC257E1D2F000D24DA /* Main.storyboard */,
+				B55256BF257E1D30000D24DA /* Assets.xcassets */,
+				B55256C1257E1D30000D24DA /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B500C2B92580DA4400D00AFB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B59931D3258224C100D9D857 /* Post */,
+				B500C2BA2580DA5E00D00AFB /* NotificationTableViewCell.swift */,
+				B59931D025821BFC00D9D857 /* HomeTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		B55256AA257E1D2F000D24DA = {
 			isa = PBXGroup;
 			children = (
@@ -107,15 +140,11 @@
 		B55256B5257E1D2F000D24DA /* Mushrooms */ = {
 			isa = PBXGroup;
 			children = (
+				B55256D1257E227A000D24DA /* Controllers */,
+				B500C2B72580DA2D00D00AFB /* View */,
 				B5FAC854257F729800ED025F /* Model */,
 				B5CD10CC257E337800E493F6 /* Helpers */,
 				B5CD10CB257E335300E493F6 /* Sources */,
-				B55256D1257E227A000D24DA /* Controllers */,
-				B55256B6257E1D2F000D24DA /* AppDelegate.swift */,
-				B55256B8257E1D2F000D24DA /* SceneDelegate.swift */,
-				B55256BC257E1D2F000D24DA /* Main.storyboard */,
-				B55256BF257E1D30000D24DA /* Assets.xcassets */,
-				B55256C1257E1D30000D24DA /* LaunchScreen.storyboard */,
 				B55256C4257E1D30000D24DA /* Info.plist */,
 			);
 			path = Mushrooms;
@@ -155,15 +184,27 @@
 		B55256D4257E22A2000D24DA /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				B5FAC848257F6BBC00ED025F /* Login&Register */,
+				B5FAC848257F6BBC00ED025F /* Login & Register */,
 				B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		B59931D3258224C100D9D857 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */,
+				B59931D8258225AC00D9D857 /* PostTableViewCell.swift */,
+				B59931DB258225CB00D9D857 /* ActionsTableViewCell.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
 		B5CD10CB257E335300E493F6 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B55256B6257E1D2F000D24DA /* AppDelegate.swift */,
+				B55256B8257E1D2F000D24DA /* SceneDelegate.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -197,13 +238,13 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		B5FAC848257F6BBC00ED025F /* Login&Register */ = {
+		B5FAC848257F6BBC00ED025F /* Login & Register */ = {
 			isa = PBXGroup;
 			children = (
 				B55256CE257E224C000D24DA /* RegisterVC.swift */,
 				B55256CB257E223E000D24DA /* LoginVC.swift */,
 			);
-			path = "Login&Register";
+			path = "Login & Register";
 			sourceTree = "<group>";
 		};
 		B5FAC854257F729800ED025F /* Model */ = {
@@ -218,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */,
+				B500C2B42580AF6700D00AFB /* ChangePasswordVC.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -304,20 +346,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B500C2BB2580DA5E00D00AFB /* NotificationTableViewCell.swift in Sources */,
 				B55256BB257E1D2F000D24DA /* HomeVC.swift in Sources */,
+				B59931D62582258D00D9D857 /* PostHeaderTableViewCell.swift in Sources */,
 				B55256B7257E1D2F000D24DA /* AppDelegate.swift in Sources */,
 				B5FAC84A257F6C3E00ED025F /* ForgotPasswordVC.swift in Sources */,
 				B5FAC852257F724E00ED025F /* TextButton.swift in Sources */,
+				B500C2B52580AF6800D00AFB /* ChangePasswordVC.swift in Sources */,
+				B59931D125821BFC00D9D857 /* HomeTableViewCell.swift in Sources */,
 				B5CD10C7257E2A1700E493F6 /* MapsVC.swift in Sources */,
 				B5FAC859257F7F9000ED025F /* LocationVC.swift in Sources */,
 				B55256CC257E223E000D24DA /* LoginVC.swift in Sources */,
 				B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */,
 				B5FAC856257F72B600ED025F /* ButtonModel.swift in Sources */,
 				B5CD10CE257E339300E493F6 /* IconTextButton.swift in Sources */,
+				B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */,
 				B55256B9257E1D2F000D24DA /* SceneDelegate.swift in Sources */,
 				B55256CF257E224C000D24DA /* RegisterVC.swift in Sources */,
 				B5CD10C1257E29EC00E493F6 /* NotificationsVC.swift in Sources */,
 				B5CD10C4257E2A0000E493F6 /* AddMushroomsVC.swift in Sources */,
+				B59931DC258225CB00D9D857 /* ActionsTableViewCell.swift in Sources */,
 				B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */,
 				B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */,
 			);

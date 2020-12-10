@@ -40,7 +40,7 @@ class SettingsVC: UIViewController {
                 self?.editProfile()
             }),
             SettingsCell(title: "Change Password", handler: {[weak self] in
-                self?.editProfile()
+                self?.changePassword()
             }),
             SettingsCell(title: "Language", handler: {[weak self] in
                 self?.editProfile()
@@ -71,7 +71,8 @@ class SettingsVC: UIViewController {
     
   
     private func customNavBar() {
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Roboto-Medium", size: 24)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Roboto-Medium",size: 24)!,
+                                                                        NSAttributedString.Key.foregroundColor: UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)]
     }
     
     
@@ -79,6 +80,13 @@ class SettingsVC: UIViewController {
     
     private func editProfile() {
         let vc = EditProfileVC()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
+    }
+    
+    private func changePassword() {
+        let vc = ChangePasswordVC()
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)

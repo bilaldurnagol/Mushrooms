@@ -9,6 +9,11 @@ import UIKit
 
 class LoginVC: UIViewController {
     
+    private let scrollView: UIScrollView = {
+       let scrollView = UIScrollView()
+        return scrollView
+    }()
+    
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "MushroomLogo")
@@ -84,18 +89,26 @@ class LoginVC: UIViewController {
         return label
     }()
     
+    private var keyboardHeight = CGFloat()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(logoImageView)
-        view.addSubview(emailLabel)
-        view.addSubview(emailTextfield)
-        view.addSubview(passwordLabel)
-        view.addSubview(passwordTextfield)
-        view.addSubview(forgotLabel)
-        view.addSubview(loginButton)
-        view.addSubview(facebookButton)
-        view.addSubview(registerLabel)
+        view.addSubview(scrollView)
+        scrollView.addSubview(logoImageView)
+        scrollView.addSubview(emailLabel)
+        scrollView.addSubview(emailTextfield)
+        scrollView.addSubview(passwordLabel)
+        scrollView.addSubview(passwordTextfield)
+        scrollView.addSubview(forgotLabel)
+        scrollView.addSubview(loginButton)
+        scrollView.addSubview(facebookButton)
+        scrollView.addSubview(registerLabel)
+
+        emailTextfield.delegate = self
+        passwordTextfield.delegate = self
+        
+        loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         
         loginButton.configure(with: InfoIconTextButton(text: "Login",
                                                        icon: UIImage(named: "MushroomSmall"),
@@ -110,12 +123,19 @@ class LoginVC: UIViewController {
         let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureHideKeyboard)
         
+        //Keyboard height
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
         
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+      
+        
+        scrollView.frame = view.bounds
+        
         let logoSize: CGFloat = 150
-        let widthSize: CGFloat = (view.width - 60)
+        let widthSize: CGFloat = (scrollView.width - 60)
         let sizeX: CGFloat = 30
         
         logoImageView.frame = CGRect(x: sizeX * 2,
@@ -146,8 +166,8 @@ class LoginVC: UIViewController {
                                    height: 20)
      
         registerLabel.frame = CGRect(x: 0,
-                                     y: view.bottom - 30,
-                                     width: view.width,
+                                     y: scrollView.bottom - 30,
+                                     width: scrollView.width,
                                      height: 20)
         facebookButton.frame = CGRect(x: sizeX,
                                       y: registerLabel.top - 80,
@@ -161,12 +181,44 @@ class LoginVC: UIViewController {
     
     
     //MARK: - objc funcs
-    
     @objc private func hideKeyboard() {
         view.endEditing(true)
     }
+    
+    @objc private func didTapLoginButton() {
+        print("Did Tap login")
+    }
+    ///Keyboard height
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            self.keyboardHeight = keyboardRectangle.height
+        }
+    }
 }
 
+
+extension LoginVC: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextfield {
+            passwordTextfield.becomeFirstResponder()
+        }else if textField == passwordTextfield {
+            self.didTapLoginButton()
+        }
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField != emailTextfield {
+            self.view.frame.origin.y -= keyboardHeight
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view.frame.origin.y = 0
+    }
+}
 
 /*
  family: Roboto
