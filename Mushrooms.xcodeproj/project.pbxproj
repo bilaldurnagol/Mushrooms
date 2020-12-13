@@ -41,9 +41,10 @@
 		B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10EA257E3DDA00E493F6 /* Extension.swift */; };
 		B5FAC84A257F6C3E00ED025F /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */; };
 		B5FAC852257F724E00ED025F /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC851257F724E00ED025F /* TextButton.swift */; };
-		B5FAC856257F72B600ED025F /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC855257F72B600ED025F /* ButtonModel.swift */; };
+		B5FAC856257F72B600ED025F /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC855257F72B600ED025F /* Button.swift */; };
 		B5FAC859257F7F9000ED025F /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC858257F7F9000ED025F /* LocationVC.swift */; };
 		B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */; };
+		B5FD0BE0258622CC00E9B05A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD0BDF258622CC00E9B05A /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,9 +84,10 @@
 		B5CD10EA257E3DDA00E493F6 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		B5FAC851257F724E00ED025F /* TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
-		B5FAC855257F72B600ED025F /* ButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; };
+		B5FAC855257F72B600ED025F /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		B5FAC858257F7F9000ED025F /* LocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
 		B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
+		B5FD0BDF258622CC00E9B05A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,7 +261,8 @@
 		B5FAC854257F729800ED025F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B5FAC855257F72B600ED025F /* ButtonModel.swift */,
+				B5FAC855257F72B600ED025F /* Button.swift */,
+				B5FD0BDF258622CC00E9B05A /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -357,7 +360,7 @@
 				B5FAC859257F7F9000ED025F /* LocationVC.swift in Sources */,
 				B55256CC257E223E000D24DA /* LoginVC.swift in Sources */,
 				B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */,
-				B5FAC856257F72B600ED025F /* ButtonModel.swift in Sources */,
+				B5FAC856257F72B600ED025F /* Button.swift in Sources */,
 				B5CD10CE257E339300E493F6 /* IconTextButton.swift in Sources */,
 				B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */,
 				B55256B9257E1D2F000D24DA /* SceneDelegate.swift in Sources */,
@@ -368,6 +371,7 @@
 				B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */,
 				B583A73825824D260036F17C /* ProfileVC.swift in Sources */,
 				B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */,
+				B5FD0BE0258622CC00E9B05A /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
