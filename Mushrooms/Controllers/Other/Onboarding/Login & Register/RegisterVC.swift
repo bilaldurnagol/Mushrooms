@@ -8,9 +8,25 @@
 import UIKit
 
 class RegisterVC: UIViewController {
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.isHidden = true
+        label.textAlignment = .center
+        label.backgroundColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+    private let underErrorLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .systemGreen
+        label.text = "There was a problem signing in. Check your email and password or create an account."
+        label.textColor = .white
+        return label
+    }()
     
     private let scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         return scrollView
     }()
     
@@ -21,8 +37,10 @@ class RegisterVC: UIViewController {
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 50
         imageView.backgroundColor = UIColor(red: 237/255, green: 237/255, blue: 237/255, alpha: 1.0)
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -34,9 +52,10 @@ class RegisterVC: UIViewController {
         return imageView
     }()
     
-    private let addButton: UIButton = {
+    private let addPhotoButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "addButton"), for: .normal)
+        
         return button
     }()
     
@@ -122,6 +141,10 @@ class RegisterVC: UIViewController {
     
     private let registerButton = IconTextButton(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
     
+    private var isValidEmail: Bool = false
+    private var isValidPassword: Bool = false
+    private var isValidConfirmPassword: Bool = false
+    
     private let registerLabel: UILabel = {
         let label = UILabel()
         let string = "You already have an account? Login"
@@ -146,10 +169,11 @@ class RegisterVC: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(scrollView)
+        view.addSubview(errorLabel)
         scrollView.addSubview(outerView)
         outerView.addSubview(profileImageView)
-        profileImageView.addSubview(logoImageView)
-        outerView.addSubview(addButton)
+        outerView.addSubview(logoImageView)
+        outerView.addSubview(addPhotoButton)
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(nameTextfield)
         scrollView.addSubview(emailLabel)
@@ -160,7 +184,7 @@ class RegisterVC: UIViewController {
         scrollView.addSubview(confirmTextfield)
         scrollView.addSubview(registerButton)
         scrollView.addSubview(registerLabel)
-  
+        
         registerButton.configure(with: InfoIconTextButton(text: "Register",
                                                           icon: UIImage(named: "MushroomSmall"),
                                                           backgroundColor: [UIColor(red: 245/255, green: 133/255, blue: 36/255, alpha: 1.0).cgColor,
@@ -171,13 +195,18 @@ class RegisterVC: UIViewController {
         passwordTextfield.delegate = self
         confirmTextfield.delegate = self
         
+        
         registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
+        addPhotoButton.addTarget(self, action: #selector(didTabAddPhotoButton), for: .touchUpInside)
         
         let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureHideKeyboard)
         
         //Keyboard height
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification , object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -188,25 +217,32 @@ class RegisterVC: UIViewController {
         let newWidth: CGFloat = scrollView.width - 60
         let textfieldHeight: CGFloat = 50.0
         let labelHeight: CGFloat = 17.0
-    
         
-        outerView.frame = CGRect(x: (scrollView.width - 150)/2,
-                                 y: 20,
-                                 width: 150,
-                                 height: 150)
+        let outerViewSize = view.height/4
+        let outerViewX = (view.width - outerViewSize)/2
         
-        profileImageView.frame = CGRect(x: (outerView.width - 100)/2,
-                                        y: (outerView.height - 100)/2,
-                                        width: 100,
-                                        height: 100)
-        logoImageView.frame = CGRect(x: (profileImageView.width - 50)/2,
-                                     y: (profileImageView.height - 50)/2,
-                                     width: 50,
-                                     height: 50)
-        addButton.frame = CGRect(x: (outerView.width - 40)/2,
-                                 y: profileImageView.bottom - 20,
-                                 width: 40,
-                                 height: 40)
+        
+        outerView.frame = CGRect(x: outerViewX,
+                                 y: view.safeAreaInsets.top + 20,
+                                 width: outerViewSize,
+                                 height: outerViewSize)
+        
+        profileImageView.frame = CGRect(x: 10,
+                                        y: 0,
+                                        width: outerViewSize - 20,
+                                        height: outerViewSize - 20)
+        
+        profileImageView.layer.cornerRadius = profileImageView.height/2
+        
+        logoImageView.frame = CGRect(x: profileImageView.left + 10,
+                                     y: profileImageView.top + 10,
+                                     width: profileImageView.height - 20,
+                                     height: profileImageView.height - 20)
+        
+        addPhotoButton.frame = CGRect(x: (outerViewSize - 40)/2,
+                                      y: profileImageView.bottom - 20,
+                                      width: 40,
+                                      height: 40)
         
         nameLabel.frame = CGRect(x: 30,
                                  y: outerView.bottom + 10,
@@ -246,7 +282,7 @@ class RegisterVC: UIViewController {
         confirmTextfield.addBottomBorder()
         
         registerLabel.frame = CGRect(x: 0,
-                                     y: scrollView.bottom - 30,
+                                     y: scrollView.bottom - 50,
                                      width: scrollView.width,
                                      height: 20)
         
@@ -254,25 +290,93 @@ class RegisterVC: UIViewController {
                                       y: registerLabel.top - 80,
                                       width: newWidth,
                                       height: 70)
+        
+        
     }
     
-    //MARK: - objc funcs
+    private func setupErrorLabel(errorText: String) {
+        let errorLabelY = (view.safeAreaInsets.top) + (view.frame.minY * -1)
+        errorLabel.text = errorText
+        errorLabel.frame = CGRect(x: 0, y: errorLabelY, width: scrollView.width, height: 50)
+        errorLabel.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+            self?.errorLabel.isHidden = true
+        })
+    }
+    
+    //MARK:- Validations Funcs
+    private func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: candidate)
+    }
+    
+    private func validatePassword(candidate: String) -> Bool {
+        let passwordRegex = "(?=[^a-z]*[a-z])(?=[^0-9]*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}"
+        return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: candidate)
+    }
+    
+    //MARK:- objc funcs
     @objc private func didTapRegister() {
-        print("Did tap register button")
+        print("isValidPassword \(isValidPassword)")
+        print("isValidEmail \(isValidEmail)")
+        print("isValidConfirmPassword \(isValidConfirmPassword)")
+        if passwordTextfield.text == confirmTextfield.text {
+            if isValidPassword && isValidEmail && isValidConfirmPassword {
+                print("register is ok")
+            }else {
+                print("failed to register")
+            }
+        }else {
+            setupErrorLabel(errorText: "Please enter the same password.")
+            passwordTextfield.textColor = .red
+            confirmTextfield.textColor = .red
+        }
+    }
+    
+    @objc private func didTabAddPhotoButton() {
+        let photoAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        photoAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {_ in
+            self.takePhotoWithCamera()
+        }))
+        
+        photoAlert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: {_ in
+            self.choosePhotoFromLibrary()
+        }))
+        photoAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(photoAlert, animated: true)
+        
     }
     
     @objc private func hideKeyboard() {
         view.endEditing(true)
     }
     
-    ///Keyboard height
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey ] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             self.keyboardHeight = keyboardRectangle.height
         }
     }
+    
+    // MARK:- Image Helper Methods
+    private func takePhotoWithCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func choosePhotoFromLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
 }
+//MARK:- TextFields funs
 
 extension RegisterVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -292,12 +396,66 @@ extension RegisterVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField != nameTextfield {
             self.view.frame.origin.y -= keyboardHeight
+            if textField == emailTextfield {
+                if !emailTextfield.text!.isEmpty {
+                    if !isValidEmail {
+                        setupErrorLabel(errorText: "The email entered is not valid.")
+                    }
+                }
+            }else if textField == passwordTextfield {
+                if !passwordTextfield.text!.isEmpty {
+                    if !isValidPassword {
+                        setupErrorLabel(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
+                    }
+                }
+            }
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y = 0
-        
+        if textField == emailTextfield {
+            let isValid = validateEmail(candidate: emailTextfield.text!)
+            self.isValidEmail = isValid
+            if !isValidEmail {
+                emailTextfield.textColor = .red
+                setupErrorLabel(errorText: "The email entered is not valid.")
+            }else {
+                emailTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+                isValidEmail = true
+            }
+        }else if textField == passwordTextfield {
+            let isValid = validatePassword(candidate: passwordTextfield.text!)
+            self.isValidPassword = isValid
+            if !isValidPassword {
+                passwordTextfield.textColor = .red
+                setupErrorLabel(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
+            }else {
+                passwordTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+                isValidPassword = true
+            }
+        }
     }
     
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField == confirmTextfield {
+            if confirmTextfield.text == passwordTextfield.text {
+                self.isValidConfirmPassword = true
+                confirmTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+            }else {
+                confirmTextfield.textColor = .red
+                self.isValidConfirmPassword = false
+                setupErrorLabel(errorText: "Please enter the same password.")
+            }
+        }
+    }
+}
+
+extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        profileImageView.image = info[.editedImage] as? UIImage
+        logoImageView.isHidden = true
+        self.dismiss(animated: true, completion: nil)
+    }
 }

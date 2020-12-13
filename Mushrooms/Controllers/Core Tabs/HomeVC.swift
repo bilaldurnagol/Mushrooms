@@ -10,20 +10,22 @@ import UIKit
 class HomeVC: UIViewController {
     
     private let tableView: UITableView = {
-       let tableView = UITableView()
-        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
+        let tableView = UITableView()
+        tableView.register(PostHeaderTableViewCell.self, forCellReuseIdentifier: PostHeaderTableViewCell.identifier)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        tableView.register(PostActionsTableViewCell.self, forCellReuseIdentifier: PostActionsTableViewCell.identifier)
         return tableView
     }()
     
     private let sorryLogoImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "sorryLogoBig")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     private let sorryLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Sorry!"
         label.font = UIFont(name: "Roboto-Medium", size: 35)
         label.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
@@ -33,7 +35,7 @@ class HomeVC: UIViewController {
     }()
     
     private let sorryContentLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "There is no any result found in your location, Try after sometime to get better results."
         label.font = UIFont(name: "Roboto-Regular", size: 18)
         label.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
@@ -43,7 +45,7 @@ class HomeVC: UIViewController {
     }()
     
     private let navBarLogo: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "navBarLogo")
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -63,7 +65,7 @@ class HomeVC: UIViewController {
     private let currentUser = UserDefaults.standard.value(forKey: "user")
     
     private let tableCount: Int = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar()
@@ -74,7 +76,7 @@ class HomeVC: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-     
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -93,10 +95,17 @@ class HomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if currentUser != nil {
-            let vc = SettingsVC()
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+        //check auth status
+        handleNotAuthenticated()
+    
+    }
+    
+    private func handleNotAuthenticated(){
+        if currentUser == nil {
+            //show login page
+            let loginVC = RegisterVC()
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: false)
         }
     }
     
@@ -113,8 +122,8 @@ class HomeVC: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileView)
-       
-       navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
+        
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
         
     }
     
@@ -130,16 +139,56 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if section == 0 {
+            return 1
+        }else if section == 1 {
+            return 1
+        }else if section == 2 {
+            return 1
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as! HomeTableViewCell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostHeaderTableViewCell.identifier, for: indexPath) as! PostHeaderTableViewCell
+            cell.selectionStyle = .none
+            cell.backgroundColor = .lightGray
+            return cell
+        }else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+            cell.selectionStyle = .none
+            return cell
+        }else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostActionsTableViewCell.identifier, for: indexPath) as! PostActionsTableViewCell
+            cell.selectionStyle = .none
+            return cell
+        }else {
+            return UITableViewCell()
+        }
         
-        
-        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 80
+        }else if indexPath.section == 1 {
+            return tableView.width
+        }else if indexPath.section == 2 {
+            return 70
+        }else {
+            return 0
+        }
     }
     
     
