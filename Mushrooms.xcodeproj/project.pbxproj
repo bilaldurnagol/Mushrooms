@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,8 @@
 		B55256C3257E1D30000D24DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B55256C1257E1D30000D24DA /* LaunchScreen.storyboard */; };
 		B55256CC257E223E000D24DA /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256CB257E223E000D24DA /* LoginVC.swift */; };
 		B55256CF257E224C000D24DA /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256CE257E224C000D24DA /* RegisterVC.swift */; };
+		B55D818C258B9A970061B0AA /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55D818B258B9A970061B0AA /* DatabaseManager.swift */; };
+		B55D818F258B9ABA0061B0AA /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55D818E258B9ABA0061B0AA /* StorageManager.swift */; };
 		B583A73825824D260036F17C /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B583A73725824D260036F17C /* ProfileVC.swift */; };
 		B59931D62582258D00D9D857 /* PostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */; };
 		B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D8258225AC00D9D857 /* PostTableViewCell.swift */; };
@@ -41,13 +43,14 @@
 		B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10EA257E3DDA00E493F6 /* Extension.swift */; };
 		B5FAC84A257F6C3E00ED025F /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */; };
 		B5FAC852257F724E00ED025F /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC851257F724E00ED025F /* TextButton.swift */; };
-		B5FAC856257F72B600ED025F /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC855257F72B600ED025F /* Button.swift */; };
 		B5FAC859257F7F9000ED025F /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC858257F7F9000ED025F /* LocationVC.swift */; };
 		B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */; };
-		B5FD0BE0258622CC00E9B05A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD0BDF258622CC00E9B05A /* User.swift */; };
+		B5FD0BE0258622CC00E9B05A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD0BDF258622CC00E9B05A /* Models.swift */; };
+		D39847F85A2A1EE263BF8F3D /* Pods_Mushrooms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2F3BB30E34DF5AA27262382 /* Pods_Mushrooms.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		802C8975F642B867D5C8B740 /* Pods-Mushrooms.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mushrooms.release.xcconfig"; path = "Target Support Files/Pods-Mushrooms/Pods-Mushrooms.release.xcconfig"; sourceTree = "<group>"; };
 		B500C2B42580AF6700D00AFB /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		B500C2BA2580DA5E00D00AFB /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		B55256B3257E1D2F000D24DA /* Mushrooms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mushrooms.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +63,8 @@
 		B55256C4257E1D30000D24DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B55256CB257E223E000D24DA /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		B55256CE257E224C000D24DA /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		B55D818B258B9A970061B0AA /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		B55D818E258B9ABA0061B0AA /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		B583A73725824D260036F17C /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		B59931D8258225AC00D9D857 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
@@ -84,10 +89,11 @@
 		B5CD10EA257E3DDA00E493F6 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		B5FAC849257F6C3E00ED025F /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		B5FAC851257F724E00ED025F /* TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
-		B5FAC855257F72B600ED025F /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		B5FAC858257F7F9000ED025F /* LocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
 		B5FAC85C257F9F0800ED025F /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
-		B5FD0BDF258622CC00E9B05A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B5FD0BDF258622CC00E9B05A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		BC1B7CD9FAF9597424055A68 /* Pods-Mushrooms.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mushrooms.debug.xcconfig"; path = "Target Support Files/Pods-Mushrooms/Pods-Mushrooms.debug.xcconfig"; sourceTree = "<group>"; };
+		C2F3BB30E34DF5AA27262382 /* Pods_Mushrooms.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mushrooms.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,12 +101,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D39847F85A2A1EE263BF8F3D /* Pods_Mushrooms.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		806293669BAFCCA72D769ABE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C2F3BB30E34DF5AA27262382 /* Pods_Mushrooms.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B42B63E9DCCE76CA0BD58561 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC1B7CD9FAF9597424055A68 /* Pods-Mushrooms.debug.xcconfig */,
+				802C8975F642B867D5C8B740 /* Pods-Mushrooms.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		B500C2B72580DA2D00D00AFB /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,9 +148,10 @@
 		B55256AA257E1D2F000D24DA = {
 			isa = PBXGroup;
 			children = (
-				B5CD10D0257E35CC00E493F6 /* Fonts */,
 				B55256B5257E1D2F000D24DA /* Mushrooms */,
 				B55256B4257E1D2F000D24DA /* Products */,
+				B42B63E9DCCE76CA0BD58561 /* Pods */,
+				806293669BAFCCA72D769ABE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,11 +166,12 @@
 		B55256B5257E1D2F000D24DA /* Mushrooms */ = {
 			isa = PBXGroup;
 			children = (
+				B5CD10D0257E35CC00E493F6 /* Fonts */,
 				B55256D1257E227A000D24DA /* Controllers */,
 				B500C2B72580DA2D00D00AFB /* View */,
 				B5FAC854257F729800ED025F /* Model */,
 				B5CD10CC257E337800E493F6 /* Helpers */,
-				B5CD10CB257E335300E493F6 /* Sources */,
+				B5CD10CB257E335300E493F6 /* Resources */,
 				B55256C4257E1D30000D24DA /* Info.plist */,
 			);
 			path = Mushrooms;
@@ -211,13 +237,15 @@
 			path = Post;
 			sourceTree = "<group>";
 		};
-		B5CD10CB257E335300E493F6 /* Sources */ = {
+		B5CD10CB257E335300E493F6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				B55256B6257E1D2F000D24DA /* AppDelegate.swift */,
 				B55256B8257E1D2F000D24DA /* SceneDelegate.swift */,
+				B55D818B258B9A970061B0AA /* DatabaseManager.swift */,
+				B55D818E258B9ABA0061B0AA /* StorageManager.swift */,
 			);
-			path = Sources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		B5CD10CC257E337800E493F6 /* Helpers */ = {
@@ -261,8 +289,7 @@
 		B5FAC854257F729800ED025F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B5FAC855257F72B600ED025F /* Button.swift */,
-				B5FD0BDF258622CC00E9B05A /* User.swift */,
+				B5FD0BDF258622CC00E9B05A /* Models.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -274,9 +301,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B55256C7257E1D30000D24DA /* Build configuration list for PBXNativeTarget "Mushrooms" */;
 			buildPhases = (
+				0C8143886F0D1F59D2C817EE /* [CP] Check Pods Manifest.lock */,
 				B55256AF257E1D2F000D24DA /* Sources */,
 				B55256B0257E1D2F000D24DA /* Frameworks */,
 				B55256B1257E1D2F000D24DA /* Resources */,
+				05B7BDB55A687D654983CC0E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -344,6 +373,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		05B7BDB55A687D654983CC0E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mushrooms/Pods-Mushrooms-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mushrooms/Pods-Mushrooms-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mushrooms/Pods-Mushrooms-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0C8143886F0D1F59D2C817EE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mushrooms-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B55256AF257E1D2F000D24DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -351,16 +422,17 @@
 			files = (
 				B500C2BB2580DA5E00D00AFB /* NotificationTableViewCell.swift in Sources */,
 				B55256BB257E1D2F000D24DA /* HomeVC.swift in Sources */,
+				B55D818F258B9ABA0061B0AA /* StorageManager.swift in Sources */,
 				B59931D62582258D00D9D857 /* PostHeaderTableViewCell.swift in Sources */,
 				B55256B7257E1D2F000D24DA /* AppDelegate.swift in Sources */,
 				B5FAC84A257F6C3E00ED025F /* ForgotPasswordVC.swift in Sources */,
 				B5FAC852257F724E00ED025F /* TextButton.swift in Sources */,
 				B500C2B52580AF6800D00AFB /* ChangePasswordVC.swift in Sources */,
 				B5CD10C7257E2A1700E493F6 /* MapsVC.swift in Sources */,
+				B55D818C258B9A970061B0AA /* DatabaseManager.swift in Sources */,
 				B5FAC859257F7F9000ED025F /* LocationVC.swift in Sources */,
 				B55256CC257E223E000D24DA /* LoginVC.swift in Sources */,
 				B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */,
-				B5FAC856257F72B600ED025F /* Button.swift in Sources */,
 				B5CD10CE257E339300E493F6 /* IconTextButton.swift in Sources */,
 				B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */,
 				B55256B9257E1D2F000D24DA /* SceneDelegate.swift in Sources */,
@@ -371,7 +443,7 @@
 				B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */,
 				B583A73825824D260036F17C /* ProfileVC.swift in Sources */,
 				B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */,
-				B5FD0BE0258622CC00E9B05A /* User.swift in Sources */,
+				B5FD0BE0258622CC00E9B05A /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +587,7 @@
 		};
 		B55256C8257E1D30000D24DA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC1B7CD9FAF9597424055A68 /* Pods-Mushrooms.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -534,6 +607,7 @@
 		};
 		B55256C9257E1D30000D24DA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 802C8975F642B867D5C8B740 /* Pods-Mushrooms.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

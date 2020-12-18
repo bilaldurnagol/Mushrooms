@@ -8,7 +8,7 @@
 import UIKit
 
 class RegisterVC: UIViewController {
-    private let errorLabel: UILabel = {
+    private let topErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
         label.isHidden = true
@@ -17,11 +17,13 @@ class RegisterVC: UIViewController {
         label.numberOfLines = 0
         return label
     }()
-    private let underErrorLabel: UILabel = {
+    private let bottomErrorLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemGreen
         label.text = "There was a problem signing in. Check your email and password or create an account."
         label.textColor = .white
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .medium)
         return label
     }()
     
@@ -141,9 +143,7 @@ class RegisterVC: UIViewController {
     
     private let registerButton = IconTextButton(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
     
-    private var isValidEmail: Bool = false
-    private var isValidPassword: Bool = false
-    private var isValidConfirmPassword: Bool = false
+ 
     
     private let registerLabel: UILabel = {
         let label = UILabel()
@@ -164,12 +164,19 @@ class RegisterVC: UIViewController {
     
     private var keyboardHeight = CGFloat()
     
+    private var isValidEmail: Bool = false
+    private var isValidPassword: Bool = false
+    private var isValidConfirmPassword: Bool = false
+    
+    private var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
         view.addSubview(scrollView)
-        view.addSubview(errorLabel)
+        view.addSubview(topErrorLabel)
+        view.addSubview(bottomErrorLabel)
         scrollView.addSubview(outerView)
         outerView.addSubview(profileImageView)
         outerView.addSubview(logoImageView)
@@ -294,14 +301,26 @@ class RegisterVC: UIViewController {
         
     }
     
-    private func setupErrorLabel(errorText: String) {
+    private func topError(errorText: String) {
         let errorLabelY = (view.safeAreaInsets.top) + (view.frame.minY * -1)
-        errorLabel.text = errorText
-        errorLabel.frame = CGRect(x: 0, y: errorLabelY, width: scrollView.width, height: 50)
-        errorLabel.isHidden = false
+        topErrorLabel.text = errorText
+        topErrorLabel.frame = CGRect(x: 0, y: errorLabelY, width: scrollView.width, height: 50)
+        topErrorLabel.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
-            self?.errorLabel.isHidden = true
+            self?.topErrorLabel.isHidden = true
         })
+    }
+    
+    private func bottomError(errorText: String) {
+        DispatchQueue.main.async {
+            let errorLabelY = self.view.bottom - 100
+            self.bottomErrorLabel.text = errorText
+            self.bottomErrorLabel.frame = CGRect(x: 0, y: errorLabelY, width: self.scrollView.width, height: 100)
+            self.bottomErrorLabel.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+                self?.bottomErrorLabel.isHidden = true
+            })
+        }
     }
     
     //MARK:- Validations Funcs
@@ -317,20 +336,26 @@ class RegisterVC: UIViewController {
     
     //MARK:- objc funcs
     @objc private func didTapRegister() {
-        print("isValidPassword \(isValidPassword)")
-        print("isValidEmail \(isValidEmail)")
-        print("isValidConfirmPassword \(isValidConfirmPassword)")
-        if passwordTextfield.text == confirmTextfield.text {
-            if isValidPassword && isValidEmail && isValidConfirmPassword {
-                print("register is ok")
-            }else {
-                print("failed to register")
+        guard let name = nameTextfield.text,
+              let email = emailTextfield.text,
+              let password = passwordTextfield.text,
+              let imageData = profileImageView.image?.jpegData(compressionQuality: 0.5)
+        else {return}
+        
+        
+        StorageManager.shared.uploadProfileImage(with: imageData, fileName: "bilaldurnagol@gmail.com", completion: {result in
+            switch result {
+            case.success(let imageUrl):
+                DatabaseManager.shared.createNewUser(user: User(name: name, gsm: nil, email: email, password: password, image_url: imageUrl), completion: {result in
+                    switch result {
+                    case .success(let user)
+                    self.user = user
+                    }
+                })
+            case .failure(_):
+                print("Failed to upload profile image")
             }
-        }else {
-            setupErrorLabel(errorText: "Please enter the same password.")
-            passwordTextfield.textColor = .red
-            confirmTextfield.textColor = .red
-        }
+        })
     }
     
     @objc private func didTabAddPhotoButton() {
@@ -399,13 +424,13 @@ extension RegisterVC: UITextFieldDelegate {
             if textField == emailTextfield {
                 if !emailTextfield.text!.isEmpty {
                     if !isValidEmail {
-                        setupErrorLabel(errorText: "The email entered is not valid.")
+                        topError(errorText: "The email entered is not valid.")
                     }
                 }
             }else if textField == passwordTextfield {
                 if !passwordTextfield.text!.isEmpty {
                     if !isValidPassword {
-                        setupErrorLabel(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
+                        topError(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
                     }
                 }
             }
@@ -419,7 +444,7 @@ extension RegisterVC: UITextFieldDelegate {
             self.isValidEmail = isValid
             if !isValidEmail {
                 emailTextfield.textColor = .red
-                setupErrorLabel(errorText: "The email entered is not valid.")
+                topError(errorText: "The email entered is not valid.")
             }else {
                 emailTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
                 isValidEmail = true
@@ -429,7 +454,7 @@ extension RegisterVC: UITextFieldDelegate {
             self.isValidPassword = isValid
             if !isValidPassword {
                 passwordTextfield.textColor = .red
-                setupErrorLabel(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
+                topError(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
             }else {
                 passwordTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
                 isValidPassword = true
@@ -445,7 +470,7 @@ extension RegisterVC: UITextFieldDelegate {
             }else {
                 confirmTextfield.textColor = .red
                 self.isValidConfirmPassword = false
-                setupErrorLabel(errorText: "Please enter the same password.")
+                topError(errorText: "Please enter the same password.")
             }
         }
     }
@@ -456,6 +481,8 @@ extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDel
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         profileImageView.image = info[.editedImage] as? UIImage
         logoImageView.isHidden = true
+        var data = profileImageView.image?.pngData()
+        print(data)
         self.dismiss(animated: true, completion: nil)
     }
 }

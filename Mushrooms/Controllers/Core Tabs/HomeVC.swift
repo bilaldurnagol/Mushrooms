@@ -76,7 +76,6 @@ class HomeVC: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -108,7 +107,6 @@ class HomeVC: UIViewController {
             present(loginVC, animated: false)
         }
     }
-    
     
     
     private func customNavBar() {
@@ -170,6 +168,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         }else {
+            
             return UITableViewCell()
         }
         
