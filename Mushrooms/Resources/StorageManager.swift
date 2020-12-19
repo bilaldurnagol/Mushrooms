@@ -21,7 +21,7 @@ class StorageManager {
     //MARK:- Update to user profile image in Google Cloud Platform
     
     public func uploadProfileImage(with imageData: Data, fileName: String, completion: @escaping (Result<String, Error>) -> ()) {
-        let endpointUrl: String = "http://192.168.1.101:5000/upload_user_photo"
+        let endpointUrl: String = "http://192.168.1.100:5000/upload_user_photo"
         let safeFileName = StorageManager.safeFileName(emailAdress: fileName)
         AF.upload(
             multipartFormData: { formData in

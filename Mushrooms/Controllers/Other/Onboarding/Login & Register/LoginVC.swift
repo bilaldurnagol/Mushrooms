@@ -10,7 +10,7 @@ import UIKit
 class LoginVC: UIViewController {
     
     private let scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         return scrollView
     }()
     
@@ -104,7 +104,7 @@ class LoginVC: UIViewController {
         scrollView.addSubview(loginButton)
         scrollView.addSubview(facebookButton)
         scrollView.addSubview(registerLabel)
-
+        
         emailTextfield.delegate = self
         passwordTextfield.delegate = self
         
@@ -130,7 +130,7 @@ class LoginVC: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-      
+        
         
         scrollView.frame = view.bounds
         
@@ -164,7 +164,7 @@ class LoginVC: UIViewController {
                                    y: passwordTextfield.bottom + 10,
                                    width: widthSize,
                                    height: 20)
-     
+        
         registerLabel.frame = CGRect(x: 0,
                                      y: scrollView.bottom - 30,
                                      width: scrollView.width,
@@ -187,6 +187,24 @@ class LoginVC: UIViewController {
     
     @objc private func didTapLoginButton() {
         print("Did Tap login")
+        guard let email = emailTextfield.text, let password = passwordTextfield.text else {return}
+        DatabaseManager.shared.login(email: email, password: password, completion: {[weak self] result in
+            switch result {
+            case .success(let user):
+                guard let email = user.email, let name = user.name, let imageURL = user.image_url else {return}
+                UserDefaults.standard.setValue(email, forKey: "currentUser")
+                UserDefaults.standard.setValue(name, forKeyPath: "userName")
+                UserDefaults.standard.setValue(imageURL, forKeyPath: "imageURL")
+                DispatchQueue.main.async {
+                    let vc = HomeVC()
+                    let nav = UINavigationController(rootViewController: vc)
+                    nav.modalPresentationStyle = .fullScreen
+                    self?.present(nav, animated: true)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        })
     }
     ///Keyboard height
     @objc func keyboardWillShow(_ notification: Notification) {

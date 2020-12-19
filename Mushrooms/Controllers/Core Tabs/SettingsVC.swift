@@ -58,7 +58,7 @@ class SettingsVC: UIViewController {
                 self?.editProfile()
             }),
             SettingsCell(title: "Logout", handler: {[weak self] in
-                self?.editProfile()
+                self?.logout()
             })
         ])
     }
@@ -69,7 +69,7 @@ class SettingsVC: UIViewController {
         tableView.frame = view.bounds
     }
     
-  
+    
     private func customNavBar() {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Roboto-Medium",size: 24)!,
                                                                         NSAttributedString.Key.foregroundColor: UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)]
@@ -92,6 +92,19 @@ class SettingsVC: UIViewController {
         present(nav, animated: true)
     }
     
+    
+    private func logout() {
+        UserDefaults.standard.setValue(nil, forKey: "currentUser")
+        UserDefaults.standard.setValue(nil, forKeyPath: "userName")
+        UserDefaults.standard.setValue(nil, forKeyPath: "imageURL")
+        DispatchQueue.main.async {
+            let vc = LoginVC()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
+        
+    }
+    
 }
 extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     
@@ -99,7 +112,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return settingsArray.count
     }
-   
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingsArray[section].count
     }

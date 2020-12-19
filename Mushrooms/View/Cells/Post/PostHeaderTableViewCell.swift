@@ -13,7 +13,7 @@ class PostHeaderTableViewCell: UITableViewCell {
     
     private let cellView: UIView = {
        let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         return view
     }()
     

@@ -143,7 +143,7 @@ class RegisterVC: UIViewController {
     
     private let registerButton = IconTextButton(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
     
- 
+    
     
     private let registerLabel: UILabel = {
         let label = UILabel()
@@ -302,11 +302,11 @@ class RegisterVC: UIViewController {
     }
     
     private func topError(errorText: String) {
-        let errorLabelY = (view.safeAreaInsets.top) + (view.frame.minY * -1)
+        let errorLabelY = (view.safeAreaInsets.top) + (keyboardHeight)
         topErrorLabel.text = errorText
-        topErrorLabel.frame = CGRect(x: 0, y: errorLabelY, width: scrollView.width, height: 50)
+        topErrorLabel.frame = CGRect(x: 0, y: errorLabelY, width: scrollView.width, height: 70)
         topErrorLabel.isHidden = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: { [weak self] in
             self?.topErrorLabel.isHidden = true
         })
     }
@@ -315,7 +315,7 @@ class RegisterVC: UIViewController {
         DispatchQueue.main.async {
             let errorLabelY = self.view.bottom - 100
             self.bottomErrorLabel.text = errorText
-            self.bottomErrorLabel.frame = CGRect(x: 0, y: errorLabelY, width: self.scrollView.width, height: 100)
+            self.bottomErrorLabel.frame = CGRect(x: 30, y: errorLabelY, width: self.scrollView.width - 60, height: 100)
             self.bottomErrorLabel.isHidden = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
                 self?.bottomErrorLabel.isHidden = true
@@ -339,23 +339,35 @@ class RegisterVC: UIViewController {
         guard let name = nameTextfield.text,
               let email = emailTextfield.text,
               let password = passwordTextfield.text,
-              let imageData = profileImageView.image?.jpegData(compressionQuality: 0.5)
+              let imageData = profileImageView.image?.jpegData(compressionQuality: 0.75)
         else {return}
         
-        
-        StorageManager.shared.uploadProfileImage(with: imageData, fileName: "bilaldurnagol@gmail.com", completion: {result in
-            switch result {
-            case.success(let imageUrl):
-                DatabaseManager.shared.createNewUser(user: User(name: name, gsm: nil, email: email, password: password, image_url: imageUrl), completion: {result in
-                    switch result {
-                    case .success(let user)
-                    self.user = user
-                    }
-                })
-            case .failure(_):
-                print("Failed to upload profile image")
-            }
-        })
+        if isValidEmail && isValidPassword && isValidConfirmPassword {
+            StorageManager.shared.uploadProfileImage(with: imageData, fileName: "\(email)", completion: { [weak self] result in
+                switch result {
+                case.success(let imageUrl):
+                    DatabaseManager.shared.createNewUser(user: User(name: name, gsm: nil, email: email, password: password, image_url: imageUrl), completion: { [weak self] result in
+                        switch result {
+                        case .success(let user):
+                            self?.user = user
+                            UserDefaults.standard.setValue(user?.email, forKey: "currentUser")
+                            UserDefaults.standard.setValue(user?.name, forKeyPath: "userName")
+                            UserDefaults.standard.setValue(user?.image_url, forKeyPath: "imageURL")
+                            DispatchQueue.main.async {
+                                let vc = HomeVC()
+                                let nav = UINavigationController(rootViewController: vc)
+                                nav.modalPresentationStyle = .fullScreen
+                                self?.present(nav, animated: true)
+                            }
+                        case .failure(let error):
+                            print(error)
+                        }
+                    })
+                case .failure(_):
+                    print("Failed to upload profile image")
+                }
+            })
+        }
     }
     
     @objc private func didTabAddPhotoButton() {
@@ -383,6 +395,8 @@ class RegisterVC: UIViewController {
             self.keyboardHeight = keyboardRectangle.height
         }
     }
+    
+    
     
     // MARK:- Image Helper Methods
     private func takePhotoWithCamera() {
@@ -481,8 +495,6 @@ extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDel
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         profileImageView.image = info[.editedImage] as? UIImage
         logoImageView.isHidden = true
-        var data = profileImageView.image?.pngData()
-        print(data)
         self.dismiss(animated: true, completion: nil)
     }
 }

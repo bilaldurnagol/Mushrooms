@@ -62,8 +62,9 @@ class HomeVC: UIViewController {
         return view
     }()
     
-    private let currentUser = UserDefaults.standard.value(forKey: "user")
-    
+    private let currentUser = UserDefaults.standard.value(forKey: "currentUser")
+    private let userName = UserDefaults.standard.value(forKey: "userName")
+    private let profileImageURL = UserDefaults.standard.value(forKey: "imageURL")
     private let tableCount: Int = 0
     
     override func viewDidLoad() {
@@ -73,7 +74,6 @@ class HomeVC: UIViewController {
         view.addSubview(sorryLogoImageView)
         view.addSubview(sorryLabel)
         view.addSubview(sorryContentLabel)
-        
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -96,13 +96,13 @@ class HomeVC: UIViewController {
         super.viewWillAppear(animated)
         //check auth status
         handleNotAuthenticated()
-    
+        
     }
     
     private func handleNotAuthenticated(){
         if currentUser == nil {
             //show login page
-            let loginVC = RegisterVC()
+            let loginVC = LoginVC()
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: false)
         }
@@ -157,7 +157,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostHeaderTableViewCell.identifier, for: indexPath) as! PostHeaderTableViewCell
             cell.selectionStyle = .none
-            cell.backgroundColor = .lightGray
             return cell
         }else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
