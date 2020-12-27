@@ -100,11 +100,14 @@ class SettingsVC: UIViewController {
         DispatchQueue.main.async {
             let vc = LoginVC()
             vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
+            self.present(vc, animated: true){
+                self.navigationController?.popToRootViewController(animated: false)
+                self.tabBarController?.selectedIndex = 0
+            }
+            
         }
         
     }
-    
 }
 extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     

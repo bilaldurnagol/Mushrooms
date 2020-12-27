@@ -9,6 +9,33 @@ import UIKit
 
 class LoginVC: UIViewController {
     
+    private let validationErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.isHidden = true
+        label.textAlignment = .center
+        label.backgroundColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+    private let loginErrorLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .systemGreen
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
+    }()
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .systemRed
+        spinner.style = .large
+        return spinner
+    }()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
@@ -86,14 +113,17 @@ class LoginVC: UIViewController {
         attributedString.addAttribute(.font, value: UIFont(name: "Roboto-Medium", size: 17)!, range: NSRange(location: 28, length: 8))
         label.attributedText = attributedString
         label.textAlignment = .center
+        label.isUserInteractionEnabled = true
         return label
     }()
     
     private var keyboardHeight = CGFloat()
+    private var isValidEmail: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        view.addSubview(spinner)
         view.addSubview(scrollView)
         scrollView.addSubview(logoImageView)
         scrollView.addSubview(emailLabel)
@@ -104,6 +134,8 @@ class LoginVC: UIViewController {
         scrollView.addSubview(loginButton)
         scrollView.addSubview(facebookButton)
         scrollView.addSubview(registerLabel)
+        scrollView.addSubview(loginErrorLabel)
+        scrollView.addSubview(validationErrorLabel)
         
         emailTextfield.delegate = self
         passwordTextfield.delegate = self
@@ -119,6 +151,8 @@ class LoginVC: UIViewController {
                                                           backgroundColor: [UIColor(red: 60/255, green: 90/255, blue: 152/255, alpha: 1.0).cgColor,
                                                                             UIColor(red: 60/255, green: 90/255, blue: 152/255, alpha: 1.0).cgColor]))
         
+        let registerLabelGesture = UITapGestureRecognizer(target: self, action: #selector(didTapRegisterLabel))
+        registerLabel.addGestureRecognizer(registerLabelGesture)
         
         let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureHideKeyboard)
@@ -130,8 +164,6 @@ class LoginVC: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        
         scrollView.frame = view.bounds
         
         let logoSize: CGFloat = 150
@@ -177,41 +209,88 @@ class LoginVC: UIViewController {
                                    y: facebookButton.top - 80,
                                    width: widthSize,
                                    height: 70)
+        loginErrorLabel.frame = CGRect(x: 0, y: scrollView.bottom - 70, width: scrollView.width, height: 70)
+        
+        
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.center = view.center
     }
     
     
     //MARK: - objc funcs
+    
+    ///hide keyboard
     @objc private func hideKeyboard() {
         view.endEditing(true)
     }
-    
+    /// login func
     @objc private func didTapLoginButton() {
-        print("Did Tap login")
+        spinner.startAnimating()
+        view.endEditing(true)
         guard let email = emailTextfield.text, let password = passwordTextfield.text else {return}
-        DatabaseManager.shared.login(email: email, password: password, completion: {[weak self] result in
-            switch result {
-            case .success(let user):
-                guard let email = user.email, let name = user.name, let imageURL = user.image_url else {return}
-                UserDefaults.standard.setValue(email, forKey: "currentUser")
-                UserDefaults.standard.setValue(name, forKeyPath: "userName")
-                UserDefaults.standard.setValue(imageURL, forKeyPath: "imageURL")
-                DispatchQueue.main.async {
-                    let vc = HomeVC()
-                    let nav = UINavigationController(rootViewController: vc)
-                    nav.modalPresentationStyle = .fullScreen
-                    self?.present(nav, animated: true)
+        if isValidEmail{
+            DatabaseManager.shared.login(email: email, password: password, completion: {[weak self] result in
+                switch result {
+                case .success(let user):
+                    guard let email = user.email, let name = user.name, let imageURL = user.image_url else {return}
+                    UserDefaults.standard.setValue(email, forKey: "currentUser")
+                    UserDefaults.standard.setValue(name, forKeyPath: "userName")
+                    UserDefaults.standard.setValue(imageURL, forKeyPath: "imageURL")
+                    DispatchQueue.main.async {
+                        self?.spinner.stopAnimating()
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                case .failure(_):
+                    DispatchQueue.main.async {
+                        self?.spinner.stopAnimating()
+                        self?.loginErrorShow(message: "There was a problem signing in. Check your email and password or create an account.")
+                    }
+                    
                 }
-            case .failure(let error):
-                print(error)
-            }
-        })
+            })
+        }
     }
-    ///Keyboard height
+    //register page
+    @objc private func didTapRegisterLabel() {
+        let vc = RegisterVC()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     @objc func keyboardWillShow(_ notification: Notification) {
+        //Keyboard height
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             self.keyboardHeight = keyboardRectangle.height
+            print(keyboardHeight)
         }
+    }
+    
+    //MARK:- Validations Funcs
+    private func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: candidate)
+    }
+    //MARK:- Error Funcs
+    
+    /// show login user error
+    public func loginErrorShow(message: String) {
+        loginErrorLabel.isHidden = false
+        loginErrorLabel.text = message
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {[weak self] in
+            self?.loginErrorLabel.isHidden = true
+        })
+    }
+    
+    ///show textfields validation error
+    private func validationErrorShow(text: String, texfield: UITextField, height: CGFloat) {
+        validationErrorLabel.frame = CGRect(x: 0, y: texfield.bottom + 2, width: scrollView.width, height: height)
+        validationErrorLabel.isHidden = false
+        validationErrorLabel.text = text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+            self?.validationErrorLabel.isHidden = true
+            
+        })
     }
 }
 
@@ -235,6 +314,18 @@ extension LoginVC: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y = 0
+        if textField == emailTextfield {
+            if !textField.text!.isEmpty {
+                if !validateEmail(candidate: textField.text!){
+                    validationErrorShow(text: "The email entered is not valid.", texfield: textField, height: 20.0)
+                    textField.textColor = .systemRed
+                    isValidEmail = false
+                }else {
+                    textField.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+                    isValidEmail = true
+                }
+            }
+        }
     }
 }
 

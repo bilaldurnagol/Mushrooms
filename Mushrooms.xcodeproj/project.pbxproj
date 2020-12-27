@@ -166,12 +166,12 @@
 		B55256B5257E1D2F000D24DA /* Mushrooms */ = {
 			isa = PBXGroup;
 			children = (
-				B5FAC854257F729800ED025F /* Model */,
-				B5CD10CB257E335300E493F6 /* Resources */,
-				B55256D1257E227A000D24DA /* Controllers */,
-				B5CD10D0257E35CC00E493F6 /* Fonts */,
-				B500C2B72580DA2D00D00AFB /* View */,
 				B5CD10CC257E337800E493F6 /* Helpers */,
+				B5CD10CB257E335300E493F6 /* Resources */,
+				B5FAC854257F729800ED025F /* Model */,
+				B55256D1257E227A000D24DA /* Controllers */,
+				B500C2B72580DA2D00D00AFB /* View */,
+				B5CD10D0257E35CC00E493F6 /* Fonts */,
 				B55256C4257E1D30000D24DA /* Info.plist */,
 			);
 			path = Mushrooms;
@@ -594,6 +594,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7AYM348U3Y;
 				INFOPLIST_FILE = Mushrooms/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -614,6 +615,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7AYM348U3Y;
 				INFOPLIST_FILE = Mushrooms/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

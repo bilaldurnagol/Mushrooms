@@ -76,6 +76,9 @@ class HomeVC: UIViewController {
         view.addSubview(sorryContentLabel)
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //check auth status
+        handleNotAuthenticated()
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,16 +90,7 @@ class HomeVC: UIViewController {
             sorryLogoImageView.center = view.center
             sorryLabel.frame = CGRect(x: 0, y: sorryLogoImageView.bottom + 10, width: view.width, height: 50)
             sorryContentLabel.frame = CGRect(x: 30, y: sorryLabel.bottom, width: view.width - 60, height: 70)
-            
         }
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //check auth status
-        handleNotAuthenticated()
-        
     }
     
     private func handleNotAuthenticated(){
@@ -167,10 +161,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         }else {
-            
             return UITableViewCell()
         }
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -187,7 +179,5 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         }else {
             return 0
         }
-    }
-    
-    
+    }  
 }

@@ -8,7 +8,15 @@
 import UIKit
 
 class RegisterVC: UIViewController {
-    private let topErrorLabel: UILabel = {
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .systemRed
+        spinner.style = .large
+        return spinner
+    }()
+    
+    private let validationErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
         label.isHidden = true
@@ -17,13 +25,15 @@ class RegisterVC: UIViewController {
         label.numberOfLines = 0
         return label
     }()
-    private let bottomErrorLabel: UILabel = {
+    private let registerErrorLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemGreen
         label.text = "There was a problem signing in. Check your email and password or create an account."
         label.textColor = .white
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.numberOfLines = 0
+        label.isHidden = true
         return label
     }()
     
@@ -145,7 +155,7 @@ class RegisterVC: UIViewController {
     
     
     
-    private let registerLabel: UILabel = {
+    private let loginLabel: UILabel = {
         let label = UILabel()
         let string = "You already have an account? Login"
         let attributedString = NSMutableAttributedString(string: string)
@@ -157,8 +167,8 @@ class RegisterVC: UIViewController {
         attributedString.addAttribute(.font, value: UIFont(name: "Roboto-Regular", size: 17)!, range: NSRange(location: 0, length: 28))
         attributedString.addAttribute(.font, value: UIFont(name: "Roboto-Medium", size: 17)!, range: NSRange(location: 29, length: 5))
         label.attributedText = attributedString
-        
         label.textAlignment = .center
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -175,8 +185,7 @@ class RegisterVC: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(scrollView)
-        view.addSubview(topErrorLabel)
-        view.addSubview(bottomErrorLabel)
+        view.addSubview(validationErrorLabel)
         scrollView.addSubview(outerView)
         outerView.addSubview(profileImageView)
         outerView.addSubview(logoImageView)
@@ -190,7 +199,9 @@ class RegisterVC: UIViewController {
         scrollView.addSubview(confirmLabel)
         scrollView.addSubview(confirmTextfield)
         scrollView.addSubview(registerButton)
-        scrollView.addSubview(registerLabel)
+        scrollView.addSubview(loginLabel)
+        scrollView.addSubview(spinner)
+        scrollView.addSubview(registerErrorLabel)
         
         registerButton.configure(with: InfoIconTextButton(text: "Register",
                                                           icon: UIImage(named: "MushroomSmall"),
@@ -205,6 +216,9 @@ class RegisterVC: UIViewController {
         
         registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         addPhotoButton.addTarget(self, action: #selector(didTabAddPhotoButton), for: .touchUpInside)
+        
+        let loginLabelGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLoginLabel))
+        loginLabel.addGestureRecognizer(loginLabelGesture)
         
         let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureHideKeyboard)
@@ -288,39 +302,38 @@ class RegisterVC: UIViewController {
                                         height: textfieldHeight)
         confirmTextfield.addBottomBorder()
         
-        registerLabel.frame = CGRect(x: 0,
-                                     y: scrollView.bottom - 50,
-                                     width: scrollView.width,
-                                     height: 20)
+        loginLabel.frame = CGRect(x: 0,
+                                  y: scrollView.bottom - 50,
+                                  width: scrollView.width,
+                                  height: 20)
         
         registerButton.frame = CGRect(x: 30,
-                                      y: registerLabel.top - 80,
+                                      y: loginLabel.top - 80,
                                       width: newWidth,
                                       height: 70)
-        
+        registerErrorLabel.frame = CGRect(x: 0, y: scrollView.bottom - 70, width: scrollView.width, height: 70)
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.center = scrollView.center
         
     }
-    
-    private func topError(errorText: String) {
-        let errorLabelY = (view.safeAreaInsets.top) + (keyboardHeight)
-        topErrorLabel.text = errorText
-        topErrorLabel.frame = CGRect(x: 0, y: errorLabelY, width: scrollView.width, height: 70)
-        topErrorLabel.isHidden = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: { [weak self] in
-            self?.topErrorLabel.isHidden = true
+    //MARK:- Error Funcs
+    ///show textfields validation error
+    private func validationErrorShow(text: String, texfield: UITextField, height: CGFloat) {
+        validationErrorLabel.frame = CGRect(x: 0, y: texfield.bottom + 2, width: scrollView.width, height: height)
+        validationErrorLabel.isHidden = false
+        validationErrorLabel.text = text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+            self?.validationErrorLabel.isHidden = true
+            
         })
     }
-    
-    private func bottomError(errorText: String) {
-        DispatchQueue.main.async {
-            let errorLabelY = self.view.bottom - 100
-            self.bottomErrorLabel.text = errorText
-            self.bottomErrorLabel.frame = CGRect(x: 30, y: errorLabelY, width: self.scrollView.width - 60, height: 100)
-            self.bottomErrorLabel.isHidden = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
-                self?.bottomErrorLabel.isHidden = true
-            })
-        }
+    /// show login user error
+    private func RegisterErrorShow(text: String) {
+        registerErrorLabel.isHidden = false
+        registerErrorLabel.text = text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {[weak self] in
+            self?.registerErrorLabel.isHidden = true
+        })
     }
     
     //MARK:- Validations Funcs
@@ -336,13 +349,15 @@ class RegisterVC: UIViewController {
     
     //MARK:- objc funcs
     @objc private func didTapRegister() {
+        view.endEditing(true)
         guard let name = nameTextfield.text,
               let email = emailTextfield.text,
               let password = passwordTextfield.text,
-              let imageData = profileImageView.image?.jpegData(compressionQuality: 0.75)
+              let imageData = profileImageView.image?.jpegData(compressionQuality: 0.75) ?? UIImage(named: "MushroomLogo")?.jpegData(compressionQuality: 0.75)
         else {return}
         
-        if isValidEmail && isValidPassword && isValidConfirmPassword {
+        if isValidEmail && isValidPassword && isValidConfirmPassword && !nameTextfield.text!.isEmpty {
+            spinner.startAnimating()
             StorageManager.shared.uploadProfileImage(with: imageData, fileName: "\(email)", completion: { [weak self] result in
                 switch result {
                 case.success(let imageUrl):
@@ -354,20 +369,47 @@ class RegisterVC: UIViewController {
                             UserDefaults.standard.setValue(user?.name, forKeyPath: "userName")
                             UserDefaults.standard.setValue(user?.image_url, forKeyPath: "imageURL")
                             DispatchQueue.main.async {
-                                let vc = HomeVC()
-                                let nav = UINavigationController(rootViewController: vc)
-                                nav.modalPresentationStyle = .fullScreen
-                                self?.present(nav, animated: true)
+                                self?.spinner.stopAnimating()
+                                self?.dismiss(animated: true, completion: nil)
                             }
                         case .failure(let error):
-                            print(error)
+                            DispatchQueue.main.async {
+                                self?.spinner.stopAnimating()
+                                self?.RegisterErrorShow(text: error.localizedDescription)
+                                self?.emailLabel.textColor = .red
+                            }
                         }
                     })
                 case .failure(_):
                     print("Failed to upload profile image")
                 }
             })
+        }else {
+            if nameTextfield.text!.isEmpty {
+                nameLabel.textColor = .systemRed
+            }else {
+                nameLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.50)
+            }
+            if emailTextfield.text!.isEmpty {
+                emailLabel.textColor = .systemRed
+            }else {
+                emailLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.50)
+            }
+            if passwordTextfield.text!.isEmpty {
+                passwordLabel.textColor = .systemRed
+            }else {
+                passwordLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.50)
+            }
+            if confirmTextfield.text!.isEmpty {
+                confirmLabel.textColor = .systemRed
+            }else {
+                confirmLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.50)
+            }
+            RegisterErrorShow(text: "Please check your information!")
         }
+    }
+    @objc private func didTapLoginLabel() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc private func didTabAddPhotoButton() {
@@ -435,59 +477,43 @@ extension RegisterVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField != nameTextfield {
             self.view.frame.origin.y -= keyboardHeight
-            if textField == emailTextfield {
-                if !emailTextfield.text!.isEmpty {
-                    if !isValidEmail {
-                        topError(errorText: "The email entered is not valid.")
-                    }
-                }
-            }else if textField == passwordTextfield {
-                if !passwordTextfield.text!.isEmpty {
-                    if !isValidPassword {
-                        topError(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
-                    }
-                }
-            }
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y = 0
         if textField == emailTextfield {
-            let isValid = validateEmail(candidate: emailTextfield.text!)
-            self.isValidEmail = isValid
-            if !isValidEmail {
-                emailTextfield.textColor = .red
-                topError(errorText: "The email entered is not valid.")
+            if !validateEmail(candidate: textField.text ?? ""){
+                validationErrorShow(text: "The email entered is not valid.", texfield: textField, height: 20)
+                textField.textColor = .red
+                isValidEmail = false
             }else {
-                emailTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+                textField.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
                 isValidEmail = true
             }
         }else if textField == passwordTextfield {
-            let isValid = validatePassword(candidate: passwordTextfield.text!)
-            self.isValidPassword = isValid
-            if !isValidPassword {
-                passwordTextfield.textColor = .red
-                topError(errorText: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers")
+            if !validatePassword(candidate: textField.text ?? "") {
+                validationErrorShow(text: "The password entered is not valid. Must contain 8 characters, uppercase and lowercase letters, numbers",
+                                    texfield: textField,
+                                    height: 70)
+                textField.textColor = .red
+                isValidPassword = false
             }else {
-                passwordTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+                textField.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
                 isValidPassword = true
+            }
+        }else if textField == confirmTextfield {
+            if textField.text != passwordTextfield.text {
+                validationErrorShow(text: "Please enter the same password.", texfield: textField, height: 20)
+                textField.textColor = .red
+                isValidConfirmPassword = false
+            }else {
+                textField.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+                isValidConfirmPassword = true
             }
         }
     }
     
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField == confirmTextfield {
-            if confirmTextfield.text == passwordTextfield.text {
-                self.isValidConfirmPassword = true
-                confirmTextfield.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
-            }else {
-                confirmTextfield.textColor = .red
-                self.isValidConfirmPassword = false
-                topError(errorText: "Please enter the same password.")
-            }
-        }
-    }
 }
 
 extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -498,3 +524,6 @@ extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDel
         self.dismiss(animated: true, completion: nil)
     }
 }
+
+
+//
