@@ -12,6 +12,7 @@ import Alamofire
 
 class StorageManager {
     static let shared = StorageManager()
+    private let host = "http://127.0.0.1:5000"
     
     static func safeFileName(emailAdress: String) -> String {
         let safeFileName = emailAdress.replacingOccurrences(of: "@", with: "_")
@@ -21,7 +22,7 @@ class StorageManager {
     //MARK:- Update to user profile image in Google Cloud Platform
     
     public func uploadProfileImage(with imageData: Data, fileName: String, completion: @escaping (Result<String, Error>) -> ()) {
-        let endpointUrl: String = "http://192.168.1.45:5000/upload_user_photo"
+        let endpointUrl: String = "\(host)/upload_user_photo"
         let safeFileName = StorageManager.safeFileName(emailAdress: fileName)
         AF.upload(
             multipartFormData: { formData in

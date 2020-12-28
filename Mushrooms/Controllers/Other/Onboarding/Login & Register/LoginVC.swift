@@ -160,7 +160,6 @@ class LoginVC: UIViewController {
         //Keyboard height
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
