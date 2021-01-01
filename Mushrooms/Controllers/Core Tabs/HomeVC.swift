@@ -50,15 +50,16 @@ class HomeVC: UIViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
-    private let profileView: UIView = {
-        let view =  UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    private let profileImage: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        imageView.image = UIImage(named: "Bilal")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
-        view.addSubview(imageView)
+        return imageView
+    }()
+    
+    private let profileView: UIView = {
+        let view =  UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         return view
     }()
     
@@ -77,8 +78,12 @@ class HomeVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+      
+    }
+    override func viewWillAppear(_ animated: Bool) {
         //check auth status
         handleNotAuthenticated()
+        print("bilal durnagol")
     }
     
     override func viewDidLayoutSubviews() {
@@ -102,8 +107,9 @@ class HomeVC: UIViewController {
         }
     }
     
-    
     private func customNavBar() {
+        profileImage.image = getImage(imageURL: profileImageURL as? String)
+        profileView.addSubview(profileImage)
         
         navigationItem.titleView = navBarLogo
         
@@ -117,6 +123,13 @@ class HomeVC: UIViewController {
         
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
         
+    }
+    
+    private func getImage(imageURL: String?) -> UIImage? {
+        guard let imageURL = imageURL else {return nil}
+        let url = URL(string: imageURL)
+        let data = try? Data(contentsOf: url!)
+        return UIImage(data: data!)
     }
     
     //MARK: - objc func
@@ -134,8 +147,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1

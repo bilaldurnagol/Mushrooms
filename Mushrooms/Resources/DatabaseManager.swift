@@ -12,7 +12,7 @@ import Alamofire
 class DatabaseManager {
     static let shared = DatabaseManager()
     
-    private let host = "http://127.0.0.1:5000"
+    private let host = "http://192.168.1.101:5000"
     
     //MARK:- Auth funcs
     public func createNewUser(user: User, completion: @escaping (Result<User?, Error>) -> Void) {
@@ -78,6 +78,40 @@ class DatabaseManager {
             }else {
                 guard let data = try? JSONDecoder().decode(ErrorInfo.self, from: response.data!) else {return}
                 completion(.failure(DatabaseErrors.failedToForgetPassword(data.message)))
+            }
+        })
+    }
+    
+    //MARK:- POST Funcs
+    
+    public func sharePost(post: Post?, completion: @escaping (Bool) -> ()) {
+        guard let name = post?.name,
+              let content = post?.content,
+              let imageURL = post?.image_url,
+              let lat = post?.lat,
+              let long = post?.long,
+              let userID = post?.user_id else {return}
+        
+        let params = [
+            "name": name,
+            "content": content,
+            "image_url": imageURL,
+            "lat": lat,
+            "long": long,
+            "user_id": userID
+        ] as [String : Any]
+        let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
+        
+        guard let url = URL(string: "\(host)/share_post") else {return}
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = data
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        AF.request(urlRequest).responseJSON(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                completion(true)
+            }else {
+                completion(false)
             }
         })
     }

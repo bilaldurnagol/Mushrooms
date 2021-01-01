@@ -12,7 +12,7 @@ class PostHeaderTableViewCell: UITableViewCell {
     static let identifier = "PostHeaderTableViewCell"
     
     private let cellView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .clear
         return view
     }()
@@ -74,7 +74,10 @@ class PostHeaderTableViewCell: UITableViewCell {
         
     }
     
-    
-    
-    
+    public func configure(name: String, profileImage: UIImage, published: String) {
+        nameLabel.text = name
+        profilePhotoImageView.image = profileImage
+        postDateLabel.text = published
+        
+    }
 }
