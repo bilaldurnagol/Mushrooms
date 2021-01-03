@@ -19,6 +19,7 @@
 		B55256CF257E224C000D24DA /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256CE257E224C000D24DA /* RegisterVC.swift */; };
 		B55D818C258B9A970061B0AA /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55D818B258B9A970061B0AA /* DatabaseManager.swift */; };
 		B55D818F258B9ABA0061B0AA /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55D818E258B9ABA0061B0AA /* StorageManager.swift */; };
+		B5768973259A29760091D6CC /* Mushrooms.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B5768972259A29760091D6CC /* Mushrooms.mlmodel */; };
 		B583A73825824D260036F17C /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B583A73725824D260036F17C /* ProfileVC.swift */; };
 		B59931D62582258D00D9D857 /* PostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */; };
 		B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D8258225AC00D9D857 /* PostTableViewCell.swift */; };
@@ -65,6 +66,7 @@
 		B55256CE257E224C000D24DA /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		B55D818B258B9A970061B0AA /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		B55D818E258B9ABA0061B0AA /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		B5768972259A29760091D6CC /* Mushrooms.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Mushrooms.mlmodel; sourceTree = "<group>"; };
 		B583A73725824D260036F17C /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		B59931D8258225AC00D9D857 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				B500C2B72580DA2D00D00AFB /* View */,
 				B5CD10D0257E35CC00E493F6 /* Fonts */,
 				B55256C4257E1D30000D24DA /* Info.plist */,
+				B5768972259A29760091D6CC /* Mushrooms.mlmodel */,
 			);
 			path = Mushrooms;
 			sourceTree = "<group>";
@@ -251,9 +254,9 @@
 		B5CD10CC257E337800E493F6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B5CD10CD257E339300E493F6 /* IconTextButton.swift */,
 				B5CD10EA257E3DDA00E493F6 /* Extension.swift */,
 				B5FAC851257F724E00ED025F /* TextButton.swift */,
+				B5CD10CD257E339300E493F6 /* IconTextButton.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				B583A73825824D260036F17C /* ProfileVC.swift in Sources */,
 				B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */,
 				B5FD0BE0258622CC00E9B05A /* Models.swift in Sources */,
+				B5768973259A29760091D6CC /* Mushrooms.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +598,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7AYM348U3Y;
 				INFOPLIST_FILE = Mushrooms/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -615,7 +619,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7AYM348U3Y;
 				INFOPLIST_FILE = Mushrooms/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

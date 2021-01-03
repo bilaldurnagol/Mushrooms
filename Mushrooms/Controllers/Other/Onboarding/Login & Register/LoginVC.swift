@@ -154,6 +154,7 @@ class LoginVC: UIViewController {
         let registerLabelGesture = UITapGestureRecognizer(target: self, action: #selector(didTapRegisterLabel))
         registerLabel.addGestureRecognizer(registerLabelGesture)
         
+        //hide keyboard tapped view
         let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureHideKeyboard)
         
@@ -231,7 +232,8 @@ class LoginVC: UIViewController {
             DatabaseManager.shared.login(email: email, password: password, completion: {[weak self] result in
                 switch result {
                 case .success(let user):
-                    guard let email = user.email, let name = user.name, let imageURL = user.image_url else {return}
+                    guard let email = user.email, let name = user.name, let imageURL = user.image_url, let userID = user.id else {return}
+                    UserDefaults.standard.setValue(userID, forKeyPath: "userID")
                     UserDefaults.standard.setValue(email, forKey: "currentUser")
                     UserDefaults.standard.setValue(name, forKeyPath: "userName")
                     UserDefaults.standard.setValue(imageURL, forKeyPath: "imageURL")

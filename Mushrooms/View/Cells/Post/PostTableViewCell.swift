@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class PostTableViewCell: UITableViewCell {
     
@@ -20,15 +19,9 @@ class PostTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private var player: AVPlayer?
-    private var playerLayer = AVPlayerLayer()
-    
-    
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(postImageView)
-        contentView.layer.addSublayer(playerLayer)
     }
     
     required init?(coder: NSCoder) {
@@ -38,7 +31,6 @@ class PostTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         postImageView.frame = contentView.bounds
-        //        playerLayer.frame = contentView.bounds
     }
     
 }

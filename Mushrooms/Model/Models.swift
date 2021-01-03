@@ -10,6 +10,7 @@ import UIKit
 
 //User
 struct User: Codable {
+    let id: Int?
     var name: String?
     var gsm: String?
     var email: String?
@@ -17,10 +18,21 @@ struct User: Codable {
     var image_url: String?
 }
 
+//Posts
+struct Posts: Codable {
+    let post: [Post]?
+}
 
+struct Post: Codable {
+    let name: String?
+    let content: String?
+    let image_url: String?
+    let lat: Float?
+    let long: Float?
+    let user_id: Int?
+}
 
-
-//Error
+//Database messages
 struct ErrorInfo: Codable {
     let message: String
 }

@@ -358,10 +358,10 @@ class RegisterVC: UIViewController {
         
         if isValidEmail && isValidPassword && isValidConfirmPassword && !nameTextfield.text!.isEmpty {
             spinner.startAnimating()
-            StorageManager.shared.uploadProfileImage(with: imageData, fileName: "\(email)", completion: { [weak self] result in
+            StorageManager.shared.uploadImage(with: imageData, fileName: "profile_image/\(email)", completion: { [weak self] result in
                 switch result {
                 case.success(let imageUrl):
-                    DatabaseManager.shared.createNewUser(user: User(name: name, gsm: nil, email: email, password: password, image_url: imageUrl), completion: { [weak self] result in
+                    DatabaseManager.shared.createNewUser(user: User(id: nil, name: name, gsm: nil, email: email, password: password, image_url: imageUrl), completion: { [weak self] result in
                         switch result {
                         case .success(let user):
                             self?.user = user
@@ -424,7 +424,6 @@ class RegisterVC: UIViewController {
         }))
         photoAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(photoAlert, animated: true)
-        
     }
     
     @objc private func hideKeyboard() {

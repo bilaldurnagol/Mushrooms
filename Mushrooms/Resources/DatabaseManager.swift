@@ -12,7 +12,7 @@ import Alamofire
 class DatabaseManager {
     static let shared = DatabaseManager()
     
-    private let host = "http://127.0.0.1:5000"
+    private let host = "http://192.168.1.101:5000"
     
     //MARK:- Auth funcs
     public func createNewUser(user: User, completion: @escaping (Result<User?, Error>) -> Void) {
@@ -81,6 +81,57 @@ class DatabaseManager {
             }
         })
     }
+    
+    //MARK:- POST Funcs
+    
+    public func sharePost(post: Post?, completion: @escaping (Bool) -> ()) {
+        //Share post
+        guard let name = post?.name,
+              let content = post?.content,
+              let imageURL = post?.image_url,
+              let lat = post?.lat,
+              let long = post?.long,
+              let userID = post?.user_id else {return}
+        
+        let params = [
+            "name": name,
+            "content": content,
+            "image_url": imageURL,
+            "lat": lat,
+            "long": long,
+            "user_id": userID
+        ] as [String : Any]
+        let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
+        
+        guard let url = URL(string: "\(host)/share_post") else {return}
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = data
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        AF.request(urlRequest).responseJSON(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                completion(true)
+            }else {
+                completion(false)
+            }
+        })
+    }
+    
+    public func fetchMushrooms(completion: @escaping (Result<Posts, Error>) -> ()) {
+        //fetch mushrooms for show maps
+        guard let url = URL(string: "\(host)/fetch_mushrooms") else {return}
+        
+        AF.request(url).validate().responseJSON(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                guard let data = try? JSONDecoder().decode(Posts.self, from: response.data!) else {return}
+                completion(.success(data))
+            } else {
+                completion(.failure(DatabaseErrors.failedToFetchMushrooms))
+            }
+        })
+        
+    }
+    
 }
 
 
@@ -88,6 +139,7 @@ enum DatabaseErrors: Error {
     case failedToRegister(String)
     case failedToLogin(String)
     case failedToForgetPassword(String)
+    case failedToFetchMushrooms
 }
 
 extension DatabaseErrors: LocalizedError {
@@ -99,17 +151,8 @@ extension DatabaseErrors: LocalizedError {
             return NSLocalizedString("\(error)", comment: "Error")
         case .failedToForgetPassword(let error):
             return NSLocalizedString("\(error)", comment: "Error")
+        case .failedToFetchMushrooms:
+            return NSLocalizedString("Failed to get mushrooms for use maps show", comment: "Error")
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
