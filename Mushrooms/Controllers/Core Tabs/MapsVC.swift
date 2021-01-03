@@ -115,14 +115,18 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         //navigation func
-        guard let lat = view.annotation?.coordinate.latitude, let long = view.annotation?.coordinate.longitude else {return}
+        
+        guard let lat = view.annotation?.coordinate.latitude,
+              let long = view.annotation?.coordinate.longitude,
+              let name = view.annotation?.title else {return}
+        
         let mushroomLocation = CLLocation(latitude: lat, longitude: long)
         
         CLGeocoder().reverseGeocodeLocation(mushroomLocation, completionHandler: {placaMarks, error in
             if !placaMarks!.isEmpty {
                 let newPlaceMark = MKPlacemark(placemark: (placaMarks?.first)!)
                 let item = MKMapItem(placemark: newPlaceMark)
-                item.name = "Mushroom Location"
+                item.name = name
                 let launchOptions = [
                     MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
                 ]
