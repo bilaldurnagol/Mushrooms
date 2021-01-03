@@ -78,11 +78,11 @@ class HomeVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        //check auth status
+        handleNotAuthenticated()
       
     }
     override func viewWillAppear(_ animated: Bool) {
-        //check auth status
-        handleNotAuthenticated()
         print("bilal durnagol")
     }
     

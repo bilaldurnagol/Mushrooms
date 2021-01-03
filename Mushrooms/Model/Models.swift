@@ -20,21 +20,19 @@ struct User: Codable {
 
 //Posts
 struct Posts: Codable {
-    let post: [Post]
+    let post: [Post]?
 }
 
 struct Post: Codable {
-    let name: String
-    let content: String
-    let image_url: String
-    let lat: Float
-    let long: Float
-    let user_id: Int
-    
-
+    let name: String?
+    let content: String?
+    let image_url: String?
+    let lat: Float?
+    let long: Float?
+    let user_id: Int?
 }
 
-//Error
+//Database messages
 struct ErrorInfo: Codable {
     let message: String
 }

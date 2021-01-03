@@ -25,12 +25,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Uygulama galerinize erişmek istiyor</string>
 	<key>NSCameraUsageDescription</key>
 	<string>You can take a photo to use it in app</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app wants your location!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Uygulama galerinize erişmek istiyor</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Black.ttf</string>
@@ -75,7 +75,7 @@
 		<string>armv7</string>
 	</array>
 	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleBlackOpaque</string>
+	<string>UIStatusBarStyleDarkContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -87,6 +87,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

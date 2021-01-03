@@ -8,6 +8,7 @@
 import UIKit
 import CoreML
 import Vision
+import CoreLocation
 
 class AddMushroomsVC: UIViewController {
     
@@ -15,6 +16,8 @@ class AddMushroomsVC: UIViewController {
     private let userName = UserDefaults.standard.value(forKey: "userName")
     private let profileImageURL = UserDefaults.standard.value(forKey: "imageURL")
     private let userID = UserDefaults.standard.value(forKey: "userID")
+    
+    private var locationManager = CLLocationManager()
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -93,6 +96,8 @@ class AddMushroomsVC: UIViewController {
     private var keyboardHeight = CGFloat()
     private var choosenImage: CIImage?
     private var mushroomName: String?
+    private var lat: Float?
+    private var long: Float?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,6 +124,11 @@ class AddMushroomsVC: UIViewController {
         addPostButton.addTarget(self, action: #selector(didTapAddPostButton), for: .touchUpInside)
         
         contentPostTextView.delegate = self
+        locationManager.delegate = self
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         
         
         //Keyboard height
@@ -260,9 +270,10 @@ class AddMushroomsVC: UIViewController {
               let content = contentPostTextView.text,
               let mushroomName = mushroomName,
               let userID = userID as? Int else {return}
+        
         let uniqFileName = fileNameGenerator()
-        StorageManager.shared.uploadImage(with: imageData, fileName: "post_image/\(email)_\(uniqFileName)", completion: {[weak self] result
-            in
+        
+        StorageManager.shared.uploadImage(with: imageData, fileName: "post_image/\(email)_\(uniqFileName)", completion: {[weak self] result in
             guard let strongSelf = self else {return}
             switch result {
             case .failure(let error):
@@ -270,7 +281,16 @@ class AddMushroomsVC: UIViewController {
                 strongSelf.didTapCancelButton()
             case .success(let imageURL):
                 strongSelf.progressView.setProgress(0.8, animated: true)
-                let post = Post(name: mushroomName, content: content, image_url: imageURL, lat: 324.324, long: 23.42, user_id: userID)
+                
+                guard let lat = strongSelf.lat, let long = strongSelf.long else {return}
+                
+                let post = Post(name: mushroomName,
+                                content: content,
+                                image_url: imageURL,
+                                lat: lat,
+                                long: long,
+                                user_id: userID)
+                
                 DatabaseManager.shared.sharePost(post: post, completion: { result in
                     if result {
                         strongSelf.progressView.setProgress(1.0, animated: true)
@@ -368,5 +388,13 @@ extension AddMushroomsVC: UIImagePickerControllerDelegate, UINavigationControlle
         }
         self.dismiss(animated: true, completion: nil)
         recognizeImage(image: choosenImage!)
+    }
+}
+
+extension AddMushroomsVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
+        lat = Float(location.latitude)
+        long = Float(location.longitude)
     }
 }
