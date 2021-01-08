@@ -159,6 +159,7 @@ class DatabaseManager {
     }
     
     public func likePost(postID: Int, userID: Int, completion: @escaping (Result<NotificationModel, Error>) -> ()) {
+        //like post
         guard let url = URL(string: "\(host)/like/\(postID)/\(userID)") else {return}
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
@@ -172,6 +173,22 @@ class DatabaseManager {
             }
         })
     }
+    
+    public func dislikePost(postID: Int, userID: Int, completion: @escaping (Result<NotificationModel, Error>) -> ()) {
+        //like post
+        guard let url = URL(string: "\(host)/dislike/\(postID)/\(userID)") else {return}
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        
+        AF.request(urlRequest).response(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                guard let data = try? JSONDecoder().decode(NotificationModel.self, from: response.data!) else {return}
+                completion(.success(data))
+            }else {
+                completion(.failure(DatabaseErrors.failedToDislike))
+            }
+        })
+    }
 }
 
 enum DatabaseErrors: Error {
@@ -182,6 +199,7 @@ enum DatabaseErrors: Error {
     case failedToFetchMushrooms
     case failedToFetchPosts
     case failedToLike
+    case failedToDislike
 }
 
 extension DatabaseErrors: LocalizedError {
@@ -201,6 +219,8 @@ extension DatabaseErrors: LocalizedError {
             return NSLocalizedString("Failed to get user info", comment: "Error")
         case .failedToLike:
             return NSLocalizedString("Failed to like in post", comment: "Error")
+        case .failedToDislike:
+            return NSLocalizedString("Failed to dislike in post", comment: "Error")
         }
     }
 }

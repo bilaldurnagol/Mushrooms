@@ -81,6 +81,7 @@ class PostTableViewCell: UITableViewCell {
     private var postID: Int?
     private var currentUserID: Int?
     private var likeCount = 0
+    private var isLike: Bool?
     
     var delegate: PostTableViewCellDelegate?
     
@@ -89,7 +90,7 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addObjects()
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapLike))
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapDouble))
         gestureRecognizer.numberOfTapsRequired = 2
         postImageView.addGestureRecognizer(gestureRecognizer)
         
@@ -156,7 +157,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     public func configure (post: Post?, user: User?, currentUserID: Int?, isLike: Bool?) {
-        
+        //Configure tableviewcell
         guard let profileImageURL = URL(string: (user?.image_url)!),
               let name = user?.name,
               let published = post?.created,
@@ -166,6 +167,7 @@ class PostTableViewCell: UITableViewCell {
         self.postID = post?.id
         self.currentUserID = currentUserID
         self.likeCount = likeCount
+        self.isLike = isLike
         
         profileImageView.loadImage(fromURL: profileImageURL, placeHolderImage: "LoadingImage")
         nameLabel.text = name
@@ -173,7 +175,7 @@ class PostTableViewCell: UITableViewCell {
         postImageView.loadImage(fromURL: postImageURL, placeHolderImage: "LoadingImage")
         likeCountLabel.text = "\(self.likeCount) likes"
         
-        if isLike! {
+        if self.isLike! {
             let configure = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 24,
                                                                                 weight: .medium))
             
@@ -193,20 +195,44 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    //MARK:- Objc Funcs
-    @objc private func didTapLike() {
+    //MARK:- Database Funcs
+    
+    private func likePost() {
+        //like post
         guard let postID = postID, let userID = currentUserID else {return}
-        
-        DatabaseManager.shared.likePost(postID: postID, userID: userID, completion: {[weak self] result in
-            guard let strongSelf = self else {return}
+        DatabaseManager.shared.likePost(postID: postID, userID: userID, completion: {result in
             switch result {
             case .success(_):
-                if let delegate = strongSelf.delegate {
-                    delegate.clickedLikeButton()
-                }
+                print("OK!")
             case .failure(let error):
                 print(error.localizedDescription)
             }
         })
+    }
+    
+    private func dislikePost() {
+        //dislike post
+        guard let postID = postID, let userID = currentUserID else {return}
+        DatabaseManager.shared.dislikePost(postID: postID, userID: userID, completion: {result in
+            switch result {
+            case .success(_):
+                print("OK!")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
+    //MARK:- Objc Funcs
+    @objc private func didTapDouble() {
+        if self.isLike! {
+            dislikePost()
+        } else {
+            likePost()
+        }
+        if let delegate = delegate {
+            delegate.clickedLikeButton()
+        }
+        
     }
 }
