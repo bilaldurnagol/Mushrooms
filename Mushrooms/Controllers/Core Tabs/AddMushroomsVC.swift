@@ -12,10 +12,10 @@ import CoreLocation
 
 class AddMushroomsVC: UIViewController {
     
-    private let currentUser = UserDefaults.standard.value(forKey: "currentUser")
-    private let userName = UserDefaults.standard.value(forKey: "userName")
-    private let profileImageURL = UserDefaults.standard.value(forKey: "imageURL")
-    private let userID = UserDefaults.standard.value(forKey: "userID")
+    private var currentUser: String?
+    private var userName: String?
+    private var profileImageURL: String?
+    private var userID: Int?
     
     private var locationManager = CLLocationManager()
     
@@ -27,7 +27,6 @@ class AddMushroomsVC: UIViewController {
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "Bilal")
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 25.0
         return imageView
@@ -35,7 +34,6 @@ class AddMushroomsVC: UIViewController {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Bilal Durnagöl"
         label.font = UIFont(name: "Roboto-Medium", size: 20)
         label.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
         label.numberOfLines = 1
@@ -101,18 +99,8 @@ class AddMushroomsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         customNavBar()
-        view.addSubview(scrollView)
-        scrollView.addSubview(progressView)
-        scrollView.addSubview(profileImageView)
-        scrollView.addSubview(nameLabel)
-        scrollView.addSubview(postImageView)
-        postImageView.addSubview(uploadLabel)
-        postImageView.addSubview(addPostButton)
-        scrollView.addSubview(resultLabel)
-        scrollView.addSubview(contentPostTextView)
-        scrollView.addSubview(shareButton)
+        addObjects()
         
         progressView.setProgress(0.0, animated: false)
         
@@ -141,7 +129,38 @@ class AddMushroomsVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        frameObjects()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentUser = UserDefaults.standard.value(forKey: "currentUser") as? String
+        userID = UserDefaults.standard.value(forKey: "userID") as? Int
+        userName = UserDefaults.standard.value(forKey: "userName") as? String
+        profileImageURL = UserDefaults.standard.value(forKey: "imageURL") as? String
         
+        profileImageView.image = getImageToURL(imageURL: profileImageURL)
+        nameLabel.text = userName
+    }
+    
+    //MARK: - Custom Objects
+    
+    private func addObjects() {
+        //Add objects to view
+        view.addSubview(scrollView)
+        scrollView.addSubview(progressView)
+        scrollView.addSubview(profileImageView)
+        scrollView.addSubview(nameLabel)
+        scrollView.addSubview(postImageView)
+        postImageView.addSubview(uploadLabel)
+        postImageView.addSubview(addPostButton)
+        scrollView.addSubview(resultLabel)
+        scrollView.addSubview(contentPostTextView)
+        scrollView.addSubview(shareButton)
+    }
+    
+    private func frameObjects() {
+        //Designing objects in view
         let tabBarHeight = UITabBarController().tabBar.height
         let navBarHeight = UINavigationController().navigationBar.height
         progressView.frame = CGRect(x: 10,
@@ -183,8 +202,22 @@ class AddMushroomsVC: UIViewController {
                                    y: postImageView.bottom - 50,
                                    width: scrollView.width,
                                    height: 50)
+       
+    }
+
+    
+    private func customNavBar() {
+        //Custom navigation bar
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Roboto-Medium",size: 24)!,
+                                                                        NSAttributedString.Key.foregroundColor: UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapCancelButton))
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 20)!],
+                                                                  for: UIControl.State.normal)
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
+    //MARK:- CoreML Func
     private func recognizeImage(image: CIImage) {
         //1)request
         //2)handle
@@ -215,17 +248,7 @@ class AddMushroomsVC: UIViewController {
         }
     }
     
-    private func customNavBar() {
-        //Custom navigation bar
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Roboto-Medium",size: 24)!,
-                                                                        NSAttributedString.Key.foregroundColor: UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)]
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapCancelButton))
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Roboto-Regular", size: 20)!],
-                                                                  for: UIControl.State.normal)
-        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
-        navigationItem.rightBarButtonItem?.isEnabled = false
-    }
-    
+    //MARK:- Helper Funcs
     private func fileNameGenerator() -> String {
         //Create uniq filename
         let passwordCharacters = Array("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
@@ -240,8 +263,16 @@ class AddMushroomsVC: UIViewController {
         return password
     }
     
-    //MARK: -objc funcs
+    private func getImageToURL(imageURL: String?) -> UIImage? {
+        //get image to url
+        guard let imageURL = imageURL else {return nil}
+        let url = URL(string: imageURL)
+        let data = try? Data(contentsOf: url!)
+        return UIImage(data: data!)
+    }
     
+    
+    //MARK:- objc funcs
     @objc private func didTapCancelButton() {
         //default settings for post image, result and content text
         postImageView.backgroundColor = UIColor(red: 247/255, green: 83/255, blue: 86/255, alpha: 0.1)
@@ -265,11 +296,11 @@ class AddMushroomsVC: UIViewController {
                 self.progressView.setProgress(Float(i * 10)/100, animated: true)
             })
         }
-        guard let imageData = postImageView.image?.jpegData(compressionQuality: 1.0),
+        guard let imageData = postImageView.image?.jpegData(compressionQuality: 0.1),
               let email = currentUser,
               let content = contentPostTextView.text,
               let mushroomName = mushroomName,
-              let userID = userID as? Int else {return}
+              let userID = userID else {return}
         
         let uniqFileName = fileNameGenerator()
         
@@ -284,12 +315,16 @@ class AddMushroomsVC: UIViewController {
                 
                 guard let lat = strongSelf.lat, let long = strongSelf.long else {return}
                 
-                let post = Post(name: mushroomName,
+                let post = Post(id: nil,
+                                name: mushroomName,
                                 content: content,
                                 image_url: imageURL,
                                 lat: lat,
                                 long: long,
-                                user_id: userID)
+                                user_id: userID,
+                                created: nil,
+                                comments_info: nil,
+                                likes_info: nil)
                 
                 DatabaseManager.shared.sharePost(post: post, completion: { result in
                     if result {

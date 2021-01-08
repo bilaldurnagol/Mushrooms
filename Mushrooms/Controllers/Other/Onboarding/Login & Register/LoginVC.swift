@@ -232,6 +232,7 @@ class LoginVC: UIViewController {
             DatabaseManager.shared.login(email: email, password: password, completion: {[weak self] result in
                 switch result {
                 case .success(let user):
+                    print(user)
                     guard let email = user.email, let name = user.name, let imageURL = user.image_url, let userID = user.id else {return}
                     UserDefaults.standard.setValue(userID, forKeyPath: "userID")
                     UserDefaults.standard.setValue(email, forKey: "currentUser")
@@ -263,7 +264,6 @@ class LoginVC: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             self.keyboardHeight = keyboardRectangle.height
-            print(keyboardHeight)
         }
     }
     

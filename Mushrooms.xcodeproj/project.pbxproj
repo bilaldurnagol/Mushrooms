@@ -21,9 +21,7 @@
 		B55D818F258B9ABA0061B0AA /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55D818E258B9ABA0061B0AA /* StorageManager.swift */; };
 		B5768973259A29760091D6CC /* Mushrooms.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B5768972259A29760091D6CC /* Mushrooms.mlmodel */; };
 		B583A73825824D260036F17C /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B583A73725824D260036F17C /* ProfileVC.swift */; };
-		B59931D62582258D00D9D857 /* PostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */; };
-		B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931D8258225AC00D9D857 /* PostTableViewCell.swift */; };
-		B59931DC258225CB00D9D857 /* PostActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59931DB258225CB00D9D857 /* PostActionsTableViewCell.swift */; };
+		B599CBEF25A37D2B007BE256 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599CBEE25A37D2B007BE256 /* PostTableViewCell.swift */; };
 		B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10BC257E29DC00E493F6 /* SettingsVC.swift */; };
 		B5CD10C1257E29EC00E493F6 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10C0257E29EC00E493F6 /* NotificationsVC.swift */; };
 		B5CD10C4257E2A0000E493F6 /* AddMushroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD10C3257E2A0000E493F6 /* AddMushroomsVC.swift */; };
@@ -68,9 +66,7 @@
 		B55D818E258B9ABA0061B0AA /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		B5768972259A29760091D6CC /* Mushrooms.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Mushrooms.mlmodel; sourceTree = "<group>"; };
 		B583A73725824D260036F17C /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTableViewCell.swift; sourceTree = "<group>"; };
-		B59931D8258225AC00D9D857 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
-		B59931DB258225CB00D9D857 /* PostActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionsTableViewCell.swift; sourceTree = "<group>"; };
+		B599CBEE25A37D2B007BE256 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		B5CD10BC257E29DC00E493F6 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		B5CD10C0257E29EC00E493F6 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		B5CD10C3257E2A0000E493F6 /* AddMushroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMushroomsVC.swift; sourceTree = "<group>"; };
@@ -141,8 +137,8 @@
 		B500C2B92580DA4400D00AFB /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				B59931D3258224C100D9D857 /* Post */,
 				B500C2BA2580DA5E00D00AFB /* NotificationTableViewCell.swift */,
+				B599CBEE25A37D2B007BE256 /* PostTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -228,16 +224,6 @@
 				B583A73725824D260036F17C /* ProfileVC.swift */,
 			);
 			path = General;
-			sourceTree = "<group>";
-		};
-		B59931D3258224C100D9D857 /* Post */ = {
-			isa = PBXGroup;
-			children = (
-				B59931D52582258D00D9D857 /* PostHeaderTableViewCell.swift */,
-				B59931D8258225AC00D9D857 /* PostTableViewCell.swift */,
-				B59931DB258225CB00D9D857 /* PostActionsTableViewCell.swift */,
-			);
-			path = Post;
 			sourceTree = "<group>";
 		};
 		B5CD10CB257E335300E493F6 /* Resources */ = {
@@ -426,7 +412,6 @@
 				B500C2BB2580DA5E00D00AFB /* NotificationTableViewCell.swift in Sources */,
 				B55256BB257E1D2F000D24DA /* HomeVC.swift in Sources */,
 				B55D818F258B9ABA0061B0AA /* StorageManager.swift in Sources */,
-				B59931D62582258D00D9D857 /* PostHeaderTableViewCell.swift in Sources */,
 				B55256B7257E1D2F000D24DA /* AppDelegate.swift in Sources */,
 				B5FAC84A257F6C3E00ED025F /* ForgotPasswordVC.swift in Sources */,
 				B5FAC852257F724E00ED025F /* TextButton.swift in Sources */,
@@ -437,12 +422,11 @@
 				B55256CC257E223E000D24DA /* LoginVC.swift in Sources */,
 				B5CD10EB257E3DDA00E493F6 /* Extension.swift in Sources */,
 				B5CD10CE257E339300E493F6 /* IconTextButton.swift in Sources */,
-				B59931D9258225AC00D9D857 /* PostTableViewCell.swift in Sources */,
+				B599CBEF25A37D2B007BE256 /* PostTableViewCell.swift in Sources */,
 				B55256B9257E1D2F000D24DA /* SceneDelegate.swift in Sources */,
 				B55256CF257E224C000D24DA /* RegisterVC.swift in Sources */,
 				B5CD10C1257E29EC00E493F6 /* NotificationsVC.swift in Sources */,
 				B5CD10C4257E2A0000E493F6 /* AddMushroomsVC.swift in Sources */,
-				B59931DC258225CB00D9D857 /* PostActionsTableViewCell.swift in Sources */,
 				B5FAC85D257F9F0800ED025F /* EditProfileVC.swift in Sources */,
 				B583A73825824D260036F17C /* ProfileVC.swift in Sources */,
 				B5CD10BD257E29DC00E493F6 /* SettingsVC.swift in Sources */,

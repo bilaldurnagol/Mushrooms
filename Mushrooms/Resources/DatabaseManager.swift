@@ -82,6 +82,19 @@ class DatabaseManager {
         })
     }
     
+    public func userInfo(userID: Int, completion: @escaping (Result<User, Error>) -> ()) {
+        //Get user info
+        guard let url = URL(string: "\(host)/get_user_info/\(userID)") else {return}
+        AF.request(url).validate().responseJSON(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                guard let data = try? JSONDecoder().decode(User.self, from: response.data!) else {return}
+                completion(.success(data))
+            }else {
+                completion(.failure(DatabaseErrors.failedToGetUserInfo))
+            }
+        })
+    }
+    
     //MARK:- POST Funcs
     
     public func sharePost(post: Post?, completion: @escaping (Bool) -> ()) {
@@ -129,17 +142,46 @@ class DatabaseManager {
                 completion(.failure(DatabaseErrors.failedToFetchMushrooms))
             }
         })
-        
     }
     
+    public func fetchPosts(completion: @escaping (Result<Posts, Error>) -> ()) {
+        //fetch posts for home page
+        guard let url = URL(string: "\(host)/posts") else {return}
+        
+        AF.request(url).validate().responseJSON(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                guard let data = try? JSONDecoder().decode(Posts.self, from: response.data!) else {return}
+                completion(.success(data))
+            } else {
+                completion(.failure(DatabaseErrors.failedToFetchPosts))
+            }
+        })
+    }
+    
+    public func likePost(postID: Int, userID: Int, completion: @escaping (Result<NotificationModel, Error>) -> ()) {
+        guard let url = URL(string: "\(host)/like/\(postID)/\(userID)") else {return}
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        
+        AF.request(urlRequest).response(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                guard let data = try? JSONDecoder().decode(NotificationModel.self, from: response.data!) else {return}
+                completion(.success(data))
+            }else {
+                completion(.failure(DatabaseErrors.failedToLike))
+            }
+        })
+    }
 }
-
 
 enum DatabaseErrors: Error {
     case failedToRegister(String)
     case failedToLogin(String)
     case failedToForgetPassword(String)
+    case failedToGetUserInfo
     case failedToFetchMushrooms
+    case failedToFetchPosts
+    case failedToLike
 }
 
 extension DatabaseErrors: LocalizedError {
@@ -153,6 +195,12 @@ extension DatabaseErrors: LocalizedError {
             return NSLocalizedString("\(error)", comment: "Error")
         case .failedToFetchMushrooms:
             return NSLocalizedString("Failed to get mushrooms for use maps show", comment: "Error")
+        case .failedToFetchPosts:
+            return NSLocalizedString("Failed to get posts for home page", comment: "Error")
+        case .failedToGetUserInfo:
+            return NSLocalizedString("Failed to get user info", comment: "Error")
+        case .failedToLike:
+            return NSLocalizedString("Failed to like in post", comment: "Error")
         }
     }
 }

@@ -53,8 +53,8 @@ extension UITextField {
     }
 }
 
-
 extension UIButton {
+    //grandient Button background
     func applyGradient(colors: [CGColor]) {
         self.backgroundColor = nil
         self.layoutIfNeeded()
@@ -64,6 +64,32 @@ extension UIButton {
         gradientLayer.endPoint = CGPoint(x: 1, y: 0)
         gradientLayer.frame = self.bounds
         self.layer.insertSublayer(gradientLayer, at: 0)
-   
+        
+    }
+}
+
+extension UIImageView {
+    //Lazy loading and added cache image view
+    static let imageCache = NSCache<AnyObject, UIImage>()
+    
+    func loadImage(fromURL imageURL: URL, placeHolderImage: String) {
+        
+        self.image = UIImage(named: placeHolderImage)
+        
+        if let cachedImage = UIImageView.imageCache.object(forKey: imageURL as AnyObject) {
+            self.image = cachedImage
+            return
+        }
+        
+        DispatchQueue.global().async { [weak self] in
+            if let imageData = try? Data(contentsOf: imageURL) {
+                if let image = UIImage(data: imageData) {
+                    DispatchQueue.main.async {
+                        UIImageView.imageCache.setObject(image, forKey: imageURL as AnyObject)
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }

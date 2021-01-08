@@ -97,6 +97,7 @@ class SettingsVC: UIViewController {
         UserDefaults.standard.setValue(nil, forKey: "currentUser")
         UserDefaults.standard.setValue(nil, forKeyPath: "userName")
         UserDefaults.standard.setValue(nil, forKeyPath: "imageURL")
+        UserDefaults.standard.setValue(nil, forKeyPath: "userID")
         DispatchQueue.main.async {
             let vc = LoginVC()
             vc.modalPresentationStyle = .fullScreen

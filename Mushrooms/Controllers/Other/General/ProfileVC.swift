@@ -11,9 +11,6 @@ class ProfileVC: UIViewController {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(PostHeaderTableViewCell.self, forCellReuseIdentifier: PostHeaderTableViewCell.identifier)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
-        tableView.register(PostActionsTableViewCell.self, forCellReuseIdentifier: PostActionsTableViewCell.identifier)
         return tableView
     }()
     
@@ -68,23 +65,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostHeaderTableViewCell.identifier, for: indexPath) as! PostHeaderTableViewCell
-            cell.selectionStyle = .none
-            cell.backgroundColor = .lightGray
-            return cell
-        }else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
-            cell.selectionStyle = .none
-            cell.backgroundColor = .lightGray
-            return cell
-        }else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostActionsTableViewCell.identifier, for: indexPath) as! PostActionsTableViewCell
-            cell.selectionStyle = .none
-            return cell
-        }else {
-            return UITableViewCell()
-        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

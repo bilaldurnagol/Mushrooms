@@ -11,37 +11,38 @@ class HomeVC: UIViewController {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(PostHeaderTableViewCell.self, forCellReuseIdentifier: PostHeaderTableViewCell.identifier)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
-        tableView.register(PostActionsTableViewCell.self, forCellReuseIdentifier: PostActionsTableViewCell.identifier)
+        tableView.isHidden = true
         return tableView
     }()
     
-    private let sorryLogoImageView: UIImageView = {
-        let imageView = UIImageView()
+    private let sorryView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         imageView.image = UIImage(named: "sorryLogoBig")
         imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private let sorryLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Sorry!"
-        label.font = UIFont(name: "Roboto-Medium", size: 35)
-        label.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
-        label.textAlignment = .center
-        label.numberOfLines = 1
-        return label
-    }()
-    
-    private let sorryContentLabel: UILabel = {
-        let label = UILabel()
-        label.text = "There is no any result found in your location, Try after sometime to get better results."
-        label.font = UIFont(name: "Roboto-Regular", size: 18)
-        label.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
+        imageView.center = view.center
+        view.addSubview(imageView)
+        
+        let sorryLabel = UILabel(frame: CGRect(x: 0, y: imageView.bottom + 10, width: view.width, height: 50))
+        sorryLabel.text = "Sorry!"
+        sorryLabel.font = UIFont(name: "Roboto-Medium", size: 35)
+        sorryLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+        sorryLabel.textAlignment = .center
+        sorryLabel.numberOfLines = 1
+        view.addSubview(sorryLabel)
+        
+        let sorryContentLabel = UILabel(frame: CGRect(x: 30, y: sorryLabel.bottom, width: view.width - 60, height: 70))
+        sorryContentLabel.text = "There is no any result found in your location, Try after sometime to get better results."
+        sorryContentLabel.font = UIFont(name: "Roboto-Regular", size: 18)
+        sorryContentLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
+        sorryContentLabel.textAlignment = .center
+        sorryContentLabel.numberOfLines = 0
+        view.addSubview(sorryContentLabel)
+        
+        view.isHidden = true
+        return view
     }()
     
     private let navBarLogo: UIImageView = {
@@ -63,52 +64,56 @@ class HomeVC: UIViewController {
         return view
     }()
     
-    private let currentUser = UserDefaults.standard.value(forKey: "currentUser")
-    private let userName = UserDefaults.standard.value(forKey: "userName")
-    private let profileImageURL = UserDefaults.standard.value(forKey: "imageURL")
-    private let tableCount: Int = 0
+    private var currentUser: String?
+    private var userName: String?
+    private var profileImageURL: String?
+    private var userID: Int?
+    private var posts: Posts?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customNavBar()
-        view.addSubview(tableView)
-        view.addSubview(sorryLogoImageView)
-        view.addSubview(sorryLabel)
-        view.addSubview(sorryContentLabel)
-        tableView.delegate = self
-        tableView.dataSource = self
+        addObjects()
+        setupTableView()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        currentUser = UserDefaults.standard.value(forKey: "currentUser") as? String
+        userID = UserDefaults.standard.value(forKey: "userID") as? Int
+        userName = UserDefaults.standard.value(forKey: "userName") as? String
+        profileImageURL = UserDefaults.standard.value(forKey: "imageURL") as? String
         //check auth status
         handleNotAuthenticated()
-      
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        print("bilal durnagol")
+        customNavBar()
+        fetchPosts()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if tableCount == 0 {
-            tableView.frame = view.bounds
-        }else {
-            sorryLogoImageView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-            sorryLogoImageView.center = view.center
-            sorryLabel.frame = CGRect(x: 0, y: sorryLogoImageView.bottom + 10, width: view.width, height: 50)
-            sorryContentLabel.frame = CGRect(x: 30, y: sorryLabel.bottom, width: view.width - 60, height: 70)
-        }
+        frameObjects()
     }
     
-    private func handleNotAuthenticated(){
-        if currentUser == nil {
-            //show login page
-            let loginVC = LoginVC()
-            loginVC.modalPresentationStyle = .fullScreen
-            present(loginVC, animated: false)
-        }
+    //MARK: - Custom Objects
+    
+    private func addObjects() {
+        //Add objects to view
+        view.addSubview(tableView)
+        view.addSubview(sorryView)
+    }
+    
+    private func frameObjects() {
+        //Designing objects in view
+        tableView.frame = view.bounds
+    }
+    
+    private func setupTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func customNavBar() {
-        profileImage.image = getImage(imageURL: profileImageURL as? String)
+        //custom navigation bar
+        profileImage.image = getImageToURL(imageURL: profileImageURL)
         profileView.addSubview(profileImage)
         
         navigationItem.titleView = navBarLogo
@@ -125,12 +130,63 @@ class HomeVC: UIViewController {
         
     }
     
-    private func getImage(imageURL: String?) -> UIImage? {
+    
+    //MARK:- Database funcs
+    private func fetchPosts() {
+        //get posts
+        DatabaseManager.shared.fetchPosts(completion: {[weak self] result in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let posts):
+                strongSelf.posts = posts
+                DispatchQueue.main.async {
+                    strongSelf.tableView.reloadData()
+                }
+                guard let postCount = strongSelf.posts?.post?.count else {return}
+                if postCount == 0 {
+                    strongSelf.sorryView.isHidden = false
+                    strongSelf.tableView.isHidden = true
+                }else {
+                    strongSelf.tableView.isHidden = false
+                    strongSelf.sorryView.isHidden = true
+                }
+            }
+        })
+    }
+    
+    private func getUserInfo(userID: Int?, completion: @escaping (User) -> ()) {
+        guard let userID = userID else {return}
+        DatabaseManager.shared.userInfo(userID: userID, completion: {result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let user):
+                completion(user)
+            }
+        })
+    }
+    
+    //MARK:- Helper Funcs
+    private func getImageToURL(imageURL: String?) -> UIImage? {
+        //get image to url
         guard let imageURL = imageURL else {return nil}
         let url = URL(string: imageURL)
         let data = try? Data(contentsOf: url!)
         return UIImage(data: data!)
     }
+    
+    private func handleNotAuthenticated(){
+        //check user login
+        if currentUser == nil {
+            //show login page
+            let loginVC = LoginVC()
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: false)
+        }
+    }
+    
     
     //MARK: - objc func
     @objc private func didTapSearchButton() {
@@ -143,37 +199,33 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        }else if section == 1 {
-            return 1
-        }else if section == 2 {
-            return 1
-        }
-        return 0
+        return posts?.post!.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostHeaderTableViewCell.identifier, for: indexPath) as! PostHeaderTableViewCell
-            cell.selectionStyle = .none
-            return cell
-        }else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
-            cell.selectionStyle = .none
-            return cell
-        }else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostActionsTableViewCell.identifier, for: indexPath) as! PostActionsTableViewCell
-            cell.selectionStyle = .none
-            return cell
-        }else {
-            return UITableViewCell()
+        var isLike = false
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+        cell.selectionStyle = .none
+        let post = posts?.post?[indexPath.row]
+        
+        if let likes = post?.likes_info?.likes {
+            for like in likes {
+                if like.user_id == userID {
+                    isLike = true
+                }else {
+                    isLike = false
+                }
+            }
         }
+        
+        getUserInfo(userID: post?.user_id, completion: { [weak self] user in
+            guard let strongSelf = self else {return}
+            
+            cell.configure(post: post, user: user, currentUserID: strongSelf.userID, isLike: isLike)
+            cell.delegate = self
+        })
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -181,14 +233,15 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 80
-        }else if indexPath.section == 1 {
-            return tableView.width
-        }else if indexPath.section == 2 {
-            return 70
-        }else {
-            return 0
-        }
+        return tableView.width + 150
     }  
+}
+
+extension HomeVC: PostTableViewCellDelegate {
+    func clickedLikeButton() {
+        DispatchQueue.main.async {
+            self.fetchPosts()
+            self.tableView.reloadData()
+        }
+    }
 }

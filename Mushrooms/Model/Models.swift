@@ -8,27 +8,62 @@
 import Foundation
 import UIKit
 
-//User
+
 struct User: Codable {
+    //User
     let id: Int?
-    var name: String?
-    var gsm: String?
-    var email: String?
-    var password: String?
-    var image_url: String?
+    let name: String?
+    let gsm: String?
+    let email: String?
+    let password: String?
+    let image_url: String?
 }
 
-//Posts
+
 struct Posts: Codable {
     let post: [Post]?
 }
 
 struct Post: Codable {
+    //Post
+    let id: Int?
     let name: String?
     let content: String?
     let image_url: String?
     let lat: Float?
     let long: Float?
+    let user_id: Int?
+    let created: String?
+    let comments_info: CommentInfo?
+    let likes_info: LikeInfo?
+}
+
+struct CommentInfo: Codable {
+    //Comment info
+    let count: Int?
+    let comments: [Comments]?
+}
+
+struct Comments: Codable {
+    //Comments content and user
+    let content: String?
+    let user_id: Int?
+}
+
+
+struct LikeInfo : Codable{
+    let count: Int?
+    let likes: [Likes]?
+}
+
+struct Likes: Codable {
+    let user_id: Int?
+}
+
+
+struct NotificationModel: Codable {
+    let message: String?
+    let post_id: Int?
     let user_id: Int?
 }
 
