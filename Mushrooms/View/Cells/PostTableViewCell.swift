@@ -158,40 +158,49 @@ class PostTableViewCell: UITableViewCell {
     
     public func configure (post: Post?, user: User?, currentUserID: Int?, isLike: Bool?) {
         //Configure tableviewcell
-        guard let profileImageURL = URL(string: (user?.image_url)!),
-              let name = user?.name,
-              let published = post?.created,
-              let postImageURL = URL(string: (post?.image_url)!),
-              let likeCount = post?.likes_info?.count else {return}
         
-        self.postID = post?.id
-        self.currentUserID = currentUserID
-        self.likeCount = likeCount
-        self.isLike = isLike
-        
-        profileImageView.loadImage(fromURL: profileImageURL, placeHolderImage: "LoadingImage")
-        nameLabel.text = name
-        publishedLabel.text = published
-        postImageView.loadImage(fromURL: postImageURL, placeHolderImage: "LoadingImage")
-        likeCountLabel.text = "\(self.likeCount) likes"
-        
-        if self.isLike! {
-            let configure = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 24,
-                                                                                weight: .medium))
+        if user != nil {
+            postImageView.isUserInteractionEnabled = true
+            guard let profileImageURL = URL(string: (user?.image_url)!),
+                  let name = user?.name,
+                  let published = post?.created,
+                  let postImageURL = URL(string: (post?.image_url)!),
+                  let likeCount = post?.likes_info?.count else {return}
             
-            likeButton.setImage(UIImage(systemName: "suit.heart.fill", withConfiguration: configure),
-                                for: .normal)
-            likeButton.tintColor = UIColor.red
+            self.postID = post?.id
+            self.currentUserID = currentUserID
+            self.likeCount = likeCount
+            self.isLike = isLike
+            
+            profileImageView.loadImage(fromURL: profileImageURL, placeHolderImage: "LoadingImage")
+            nameLabel.text = name
+            publishedLabel.text = published
+            postImageView.loadImage(fromURL: postImageURL, placeHolderImage: "LoadingImage")
+            likeCountLabel.text = "\(self.likeCount) likes"
+            
+            if self.isLike! {
+                let configure = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 24,
+                                                                                    weight: .medium))
+                
+                likeButton.setImage(UIImage(systemName: "suit.heart.fill", withConfiguration: configure),
+                                    for: .normal)
+                likeButton.tintColor = UIColor.red
+            }else {
+                let configure = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 24,
+                                                                                    weight: .medium))
+                
+                likeButton.setImage(UIImage(systemName: "suit.heart", withConfiguration: configure),
+                                    for: .normal)
+                likeButton.tintColor = UIColor(red: 59/255,
+                                               green: 59/255,
+                                               blue: 59/255,
+                                               alpha: 1.0)
+            }
         }else {
-            let configure = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 24,
-                                                                                weight: .medium))
-            
-            likeButton.setImage(UIImage(systemName: "suit.heart", withConfiguration: configure),
-                                for: .normal)
-            likeButton.tintColor = UIColor(red: 59/255,
-                                           green: 59/255,
-                                           blue: 59/255,
-                                           alpha: 1.0)
+            postImageView.isUserInteractionEnabled = false
+            guard let postImageURL = URL(string:(post?.image_url)!) else {return}
+            postImageView.loadImage(fromURL: postImageURL, placeHolderImage: "LoadingImage")
+            commentButton.isHidden = true
         }
     }
     
@@ -201,11 +210,10 @@ class PostTableViewCell: UITableViewCell {
         //like post
         guard let postID = postID, let userID = currentUserID else {return}
         DatabaseManager.shared.likePost(postID: postID, userID: userID, completion: {result in
-            switch result {
-            case .success(_):
-                print("OK!")
-            case .failure(let error):
-                print(error.localizedDescription)
+            if result {
+                print("Liked!")
+            }else {
+                print("Failed to like this post")
             }
         })
     }
@@ -214,11 +222,10 @@ class PostTableViewCell: UITableViewCell {
         //dislike post
         guard let postID = postID, let userID = currentUserID else {return}
         DatabaseManager.shared.dislikePost(postID: postID, userID: userID, completion: {result in
-            switch result {
-            case .success(_):
-                print("OK!")
-            case .failure(let error):
-                print(error.localizedDescription)
+            if result {
+                print("Disliked!")
+            }else {
+                print("Failed to dislike this post")
             }
         })
     }

@@ -14,6 +14,7 @@ class DatabaseManager {
     
     private let host = "http://192.168.1.101:5000"
     
+
     //MARK:- Auth funcs
     public func createNewUser(user: User, completion: @escaping (Result<User?, Error>) -> Void) {
         //Create new user
@@ -158,7 +159,21 @@ class DatabaseManager {
         })
     }
     
-    public func likePost(postID: Int, userID: Int, completion: @escaping (Result<NotificationModel, Error>) -> ()) {
+    public func fetchPostsCurrentUser(currentUserID: Int,completion: @escaping (Result<Posts, Error>) -> ()) {
+        //fetch posts for profile page
+        guard let url = URL(string: "\(host)/posts/\(currentUserID)") else {return}
+        
+        AF.request(url).validate().responseJSON(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                guard let data = try? JSONDecoder().decode(Posts.self, from: response.data!) else {return}
+                completion(.success(data))
+            } else {
+                completion(.failure(DatabaseErrors.failedToFetchPostsCurrentUser))
+            }
+        })
+    }
+    
+    public func likePost(postID: Int, userID: Int, completion: @escaping (Bool) -> ()) {
         //like post
         guard let url = URL(string: "\(host)/like/\(postID)/\(userID)") else {return}
         var urlRequest = URLRequest(url: url)
@@ -166,15 +181,14 @@ class DatabaseManager {
         
         AF.request(urlRequest).response(completionHandler: {response in
             if response.response?.statusCode == 200 {
-                guard let data = try? JSONDecoder().decode(NotificationModel.self, from: response.data!) else {return}
-                completion(.success(data))
+                completion(true)
             }else {
-                completion(.failure(DatabaseErrors.failedToLike))
+                completion(false)
             }
         })
     }
     
-    public func dislikePost(postID: Int, userID: Int, completion: @escaping (Result<NotificationModel, Error>) -> ()) {
+    public func dislikePost(postID: Int, userID: Int, completion: @escaping (Bool) -> ()) {
         //like post
         guard let url = URL(string: "\(host)/dislike/\(postID)/\(userID)") else {return}
         var urlRequest = URLRequest(url: url)
@@ -182,10 +196,22 @@ class DatabaseManager {
         
         AF.request(urlRequest).response(completionHandler: {response in
             if response.response?.statusCode == 200 {
-                guard let data = try? JSONDecoder().decode(NotificationModel.self, from: response.data!) else {return}
-                completion(.success(data))
+                completion(true)
             }else {
-                completion(.failure(DatabaseErrors.failedToDislike))
+                completion(false)
+            }
+        })
+    }
+    
+    public func fetchNotifications(userID: Int, completion: @escaping (Result<Notifications, Error>) -> ()) {
+        guard let url = URL(string: "\(host)/notifications/\(userID)") else {return}
+        
+        AF.request(url).validate().responseJSON(completionHandler: {response in
+            if response.response?.statusCode == 200 {
+                let data = try? JSONDecoder().decode(Notifications.self, from: response.data!)
+                completion(.success(data!))
+            }else {
+                completion(.failure(DatabaseErrors.failedToFetchNotifications))
             }
         })
     }
@@ -198,8 +224,10 @@ enum DatabaseErrors: Error {
     case failedToGetUserInfo
     case failedToFetchMushrooms
     case failedToFetchPosts
+    case failedToFetchPostsCurrentUser
     case failedToLike
     case failedToDislike
+    case failedToFetchNotifications
 }
 
 extension DatabaseErrors: LocalizedError {
@@ -221,6 +249,10 @@ extension DatabaseErrors: LocalizedError {
             return NSLocalizedString("Failed to like in post", comment: "Error")
         case .failedToDislike:
             return NSLocalizedString("Failed to dislike in post", comment: "Error")
+        case .failedToFetchNotifications:
+            return NSLocalizedString("Failed to fetch notification", comment: "Error")
+        case .failedToFetchPostsCurrentUser:
+            return NSLocalizedString("Failed to get posts for profile page", comment: "Error")
         }
     }
 }

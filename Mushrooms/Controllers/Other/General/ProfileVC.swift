@@ -11,8 +11,15 @@ class ProfileVC: UIViewController {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         return tableView
     }()
+    
+    private var currentUser: String?
+    private var userName: String?
+    private var profileImageURL: String?
+    private var userID: Int?
+    private var posts: Posts?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,11 +28,22 @@ class ProfileVC: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+       
         
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentUser = UserDefaults.standard.value(forKey: "currentUser") as? String
+        userID = UserDefaults.standard.value(forKey: "userID") as? Int
+        userName = UserDefaults.standard.value(forKey: "userName") as? String
+        profileImageURL = UserDefaults.standard.value(forKey: "imageURL") as? String
+        
+        getPosts(currentUserID: userID)
     }
     
     
@@ -42,6 +60,23 @@ class ProfileVC: UIViewController {
     }
     
     
+    private func getPosts(currentUserID: Int?) {
+        guard let currentUserID = currentUserID else {return}
+        DatabaseManager.shared.fetchPostsCurrentUser(currentUserID: currentUserID, completion: {[weak self] result in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let posts):
+                strongSelf.posts = posts
+                DispatchQueue.main.async {
+                    strongSelf.tableView.reloadData()
+                }
+            }
+        })
+    }
+    
+    
     //MARK: - objc funcs
     @objc private func didTapBackButton() {
         dismiss(animated: true, completion: nil)
@@ -50,34 +85,21 @@ class ProfileVC: UIViewController {
 }
 
 extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
+  
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        }else if section == 1 {
-            return 1
-        }else if section == 2 {
-            return 1
-        }
-        return 0
+      
+        return posts?.post?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let model = posts?.post![indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+        cell.configure(post: model, user: nil, currentUserID: nil, isLike: nil)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 80
-        }else if indexPath.section == 1 {
-            return tableView.width
-        }else if indexPath.section == 2 {
-            return 70
-        }else {
-            return 0
-        }
+        return tableView.width
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

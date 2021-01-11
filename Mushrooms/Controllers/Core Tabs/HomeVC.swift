@@ -56,11 +56,13 @@ class HomeVC: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
     private let profileView: UIView = {
         let view =  UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -75,6 +77,8 @@ class HomeVC: UIViewController {
         addObjects()
         setupTableView()
         
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapProfileButton))
+        profileView.addGestureRecognizer(gestureRecognizer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +89,9 @@ class HomeVC: UIViewController {
         //check auth status
         handleNotAuthenticated()
         customNavBar()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         fetchPosts()
     }
     
@@ -125,7 +132,6 @@ class HomeVC: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileView)
-        
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 0.5)
         
     }
@@ -194,7 +200,10 @@ class HomeVC: UIViewController {
     }
     
     @objc private func didTapProfileButton() {
-        print("did tap profile photo button")
+        let vc = ProfileVC()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
 }
 

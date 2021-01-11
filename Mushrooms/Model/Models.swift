@@ -61,10 +61,16 @@ struct Likes: Codable {
 }
 
 
+struct Notifications: Codable {
+    let notifications: [NotificationModel]
+}
+
 struct NotificationModel: Codable {
-    let message: String?
-    let post_id: Int?
-    let user_id: Int?
+    let content: String
+    let created: String
+    let image_url: String
+    let name: String
+    let post_id: Int
 }
 
 //Database messages

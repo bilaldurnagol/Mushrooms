@@ -18,11 +18,12 @@ class NotificationTableViewCell: UITableViewCell {
         return view
     }()
     
-    private let profilePhotoImageView: UIImageView = {
+    private let postImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.image = UIImage(named: "Bilal")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 5.0
         return imageView
     }()
     
@@ -58,7 +59,7 @@ class NotificationTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(cellView)
-        cellView.addSubview(profilePhotoImageView)
+        cellView.addSubview(postImageView)
         cellView.addSubview(nameLabel)
         cellView.addSubview(notificationContentLabel)
         cellView.addSubview(notificationDateLabel)
@@ -69,16 +70,28 @@ class NotificationTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func configure(notification: NotificationModel?) {
+        guard let postUrlString = notification?.image_url,
+              let postURL = URL(string: postUrlString),
+              let name = notification?.name,
+              let content = notification?.content,
+              let published = notification?.created else {return}
+        
+        postImageView.loadImage(fromURL: postURL, placeHolderImage: "Bilal")
+        nameLabel.text = name
+        notificationContentLabel.text = content
+        notificationDateLabel.text = published
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        let customWidth: CGFloat = (contentView.width - profilePhotoImageView.width - notificationDateLabel.width - 10 - 10 - 10)
+        let customWidth: CGFloat = (contentView.width - postImageView.width - notificationDateLabel.width - 10 - 10 - 10)
         
         cellView.frame = CGRect(x: 0, y: 2.5, width: contentView.width, height: contentView.height - 5)
-        profilePhotoImageView.frame = CGRect(x: 20, y: 20, width: cellView.height - 40, height: cellView.height - 40)
-        self.profilePhotoImageView.layer.cornerRadius = profilePhotoImageView.height/2
+        postImageView.frame = CGRect(x: 20, y: 20, width: cellView.height - 40, height: cellView.height - 40)
         notificationDateLabel.frame = CGRect(x: contentView.right - 70, y: contentView.height/3, width: 50, height: 20)
-        nameLabel.frame = CGRect(x: profilePhotoImageView.right + 20, y: profilePhotoImageView.top, width: customWidth, height: 25)
-        notificationContentLabel.frame = CGRect(x: profilePhotoImageView.right + 20, y: nameLabel.bottom + 5, width: customWidth, height: 18)
+        nameLabel.frame = CGRect(x: postImageView.right + 20, y: postImageView.top, width: customWidth, height: 25)
+        notificationContentLabel.frame = CGRect(x: postImageView.right + 20, y: nameLabel.bottom + 5, width: customWidth, height: 18)
         
     }
     
