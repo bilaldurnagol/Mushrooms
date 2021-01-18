@@ -28,7 +28,7 @@ class ProfileVC: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-       
+        
         
     }
     override func viewDidLayoutSubviews() {
@@ -76,6 +76,13 @@ class ProfileVC: UIViewController {
         })
     }
     
+    private func getImageToURL(imageURL: String?) -> UIImage? {
+        //get image to url
+        guard let imageURL = imageURL else {return nil}
+        let url = URL(string: imageURL)
+        let data = try? Data(contentsOf: url!)
+        return UIImage(data: data!)
+    }
     
     //MARK: - objc funcs
     @objc private func didTapBackButton() {
@@ -85,9 +92,9 @@ class ProfileVC: UIViewController {
 }
 
 extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
-  
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      
+        
         return posts?.post?.count ?? 0
     }
     
@@ -108,7 +115,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         }else {
             return 0
         }
-       
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -123,21 +130,22 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
                                                       y: 30,
                                                       width: 100,
                                                       height: 100))
-            imageView.image = UIImage(named: "Bilal")
+            
+            imageView.image = getImageToURL(imageURL: profileImageURL)
             imageView.layer.masksToBounds = true
             imageView.layer.cornerRadius = imageView.height/2
             imageView.contentMode = .scaleAspectFill
             view.addSubview(imageView)
             
             let nameLabel = UILabel(frame: CGRect(x: 0, y: imageView.bottom + 15, width: self.view.width, height: 30))
-            nameLabel.text = "Bilal Durnagöl"
+            nameLabel.text = userName
             nameLabel.font = UIFont(name: "Roboto-Medium", size: 24)
             nameLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
             nameLabel.textAlignment = .center
             view.addSubview(nameLabel)
             
             let emailLabel = UILabel(frame: CGRect(x: 0, y: nameLabel.bottom + 5, width: self.view.width, height: 18))
-            emailLabel.text = "bilaldurnagol@gmail.com"
+            emailLabel.text = currentUser
             emailLabel.font = UIFont(name: "Roboto-Regular", size: 15)
             emailLabel.textColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1.0)
             emailLabel.textAlignment = .center
@@ -145,9 +153,5 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
             return view
         }
         return UIView()
-       
     }
-    
-    
-    
 }
