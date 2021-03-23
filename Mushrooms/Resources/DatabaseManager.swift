@@ -12,7 +12,7 @@ import Alamofire
 class DatabaseManager {
     static let shared = DatabaseManager()
     
-    private let host = "http://192.168.1.101:5000"
+    private let host = "host"
     
 
     //MARK:- Auth funcs

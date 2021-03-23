@@ -12,7 +12,7 @@ import Alamofire
 
 class StorageManager {
     static let shared = StorageManager()
-    private let host = "http://192.168.1.101:5000"
+    private let host = "host"
     
     static func safeFileName(emailAdress: String) -> String {
         let safeFileName = emailAdress.replacingOccurrences(of: "@", with: "_")
