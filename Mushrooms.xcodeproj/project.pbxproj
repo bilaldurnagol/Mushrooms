@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		B500C2B52580AF6800D00AFB /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500C2B42580AF6700D00AFB /* ChangePasswordVC.swift */; };
 		B500C2BB2580DA5E00D00AFB /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500C2BA2580DA5E00D00AFB /* NotificationTableViewCell.swift */; };
+		B54C0F94260B3A270087949F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C0F93260B3A270087949F /* logo.png */; };
+		B54C0FA2260B3AA20087949F /* screenshot_4.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C0F9E260B3AA10087949F /* screenshot_4.png */; };
+		B54C0FA3260B3AA20087949F /* screenshot_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C0F9F260B3AA10087949F /* screenshot_1.png */; };
+		B54C0FA4260B3AA20087949F /* screenshot_2.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C0FA0260B3AA10087949F /* screenshot_2.png */; };
+		B54C0FA5260B3AA20087949F /* screenshot_3.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C0FA1260B3AA10087949F /* screenshot_3.png */; };
 		B55256B7257E1D2F000D24DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256B6257E1D2F000D24DA /* AppDelegate.swift */; };
 		B55256B9257E1D2F000D24DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256B8257E1D2F000D24DA /* SceneDelegate.swift */; };
 		B55256BB257E1D2F000D24DA /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55256BA257E1D2F000D24DA /* HomeVC.swift */; };
@@ -52,6 +57,11 @@
 		802C8975F642B867D5C8B740 /* Pods-Mushrooms.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mushrooms.release.xcconfig"; path = "Target Support Files/Pods-Mushrooms/Pods-Mushrooms.release.xcconfig"; sourceTree = "<group>"; };
 		B500C2B42580AF6700D00AFB /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		B500C2BA2580DA5E00D00AFB /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		B54C0F93260B3A270087949F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		B54C0F9E260B3AA10087949F /* screenshot_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot_4.png; sourceTree = "<group>"; };
+		B54C0F9F260B3AA10087949F /* screenshot_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot_1.png; sourceTree = "<group>"; };
+		B54C0FA0260B3AA10087949F /* screenshot_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot_2.png; sourceTree = "<group>"; };
+		B54C0FA1260B3AA10087949F /* screenshot_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot_3.png; sourceTree = "<group>"; };
 		B55256B3257E1D2F000D24DA /* Mushrooms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mushrooms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B55256B6257E1D2F000D24DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B55256B8257E1D2F000D24DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,9 +153,22 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		B54C0F92260B3A160087949F /* githubImages */ = {
+			isa = PBXGroup;
+			children = (
+				B54C0F9F260B3AA10087949F /* screenshot_1.png */,
+				B54C0FA0260B3AA10087949F /* screenshot_2.png */,
+				B54C0FA1260B3AA10087949F /* screenshot_3.png */,
+				B54C0F9E260B3AA10087949F /* screenshot_4.png */,
+				B54C0F93260B3A270087949F /* logo.png */,
+			);
+			path = githubImages;
+			sourceTree = "<group>";
+		};
 		B55256AA257E1D2F000D24DA = {
 			isa = PBXGroup;
 			children = (
+				B54C0F92260B3A160087949F /* githubImages */,
 				B55256B5257E1D2F000D24DA /* Mushrooms */,
 				B55256B4257E1D2F000D24DA /* Products */,
 				B42B63E9DCCE76CA0BD58561 /* Pods */,
@@ -343,17 +366,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				B55256C3257E1D30000D24DA /* LaunchScreen.storyboard in Resources */,
+				B54C0FA3260B3AA20087949F /* screenshot_1.png in Resources */,
 				B55256C0257E1D30000D24DA /* Assets.xcassets in Resources */,
+				B54C0FA5260B3AA20087949F /* screenshot_3.png in Resources */,
+				B54C0F94260B3A270087949F /* logo.png in Resources */,
 				B5CD10DF257E35E300E493F6 /* Roboto-LightItalic.ttf in Resources */,
 				B5CD10E8257E35E300E493F6 /* Roboto-BoldItalic.ttf in Resources */,
 				B5CD10E0257E35E300E493F6 /* Roboto-Medium.ttf in Resources */,
 				B5CD10E4257E35E300E493F6 /* Roboto-Thin.ttf in Resources */,
 				B5CD10E6257E35E300E493F6 /* Roboto-Italic.ttf in Resources */,
 				B5CD10DE257E35E300E493F6 /* Roboto-BlackItalic.ttf in Resources */,
+				B54C0FA2260B3AA20087949F /* screenshot_4.png in Resources */,
 				B5CD10E5257E35E300E493F6 /* Roboto-Regular.ttf in Resources */,
 				B5CD10DD257E35E300E493F6 /* Roboto-Bold.ttf in Resources */,
 				B5CD10E1257E35E300E493F6 /* Roboto-Light.ttf in Resources */,
 				B5CD10E7257E35E300E493F6 /* Roboto-ThinItalic.ttf in Resources */,
+				B54C0FA4260B3AA20087949F /* screenshot_2.png in Resources */,
 				B5CD10E3257E35E300E493F6 /* Roboto-Black.ttf in Resources */,
 				B5CD10E2257E35E300E493F6 /* Roboto-MediumItalic.ttf in Resources */,
 				B55256BE257E1D2F000D24DA /* Main.storyboard in Resources */,
